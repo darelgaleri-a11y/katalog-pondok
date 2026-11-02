@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog — Automated Service Test</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      background: #f5f7fa;
+      color: #17202a;
+    }
+
+    h1 { margin-bottom: 6px; }
+    .subtitle { color: #667085; margin-bottom: 20px; }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    #runAllBtn { background: #111827; color: white; }
+    #clearBtn { background: #e5e7eb; }
+
+    .summary {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      background: white;
+      border: 1px solid #ddd;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 18px;
+      border-radius: 10px;
+      min-height: 300px;
+      overflow: auto;
+    }
+
+    .pass { color: #16a34a; }
+    .fail { color: #dc2626; }
+    .blocked { color: #d97706; }
+    .skip { color: #6b7280; }
+  </style>
+</head>
+
+<body>
+
+  <h1>KATALOG — Automated Service Test</h1>
+  <div class="subtitle">
+    Test berdasarkan signature aktual product-service.js dan storage-service.js
+  </div>
+
+  <button id="runAllBtn">RUN ALL TEST</button>
+  <button id="clearBtn">CLEAR</button>
+
+  <div class="summary">
+    <div class="badge">PASS: <span id="passCount">0</span></div>
+    <div class="badge">FAIL: <span id="failCount">0</span></div>
+    <div class="badge">BLOCKED: <span id="blockedCount">0</span></div>
+    <div class="badge">SKIP: <span id="skipCount">0</span></div>
+  </div>
+
+  <pre id="output"></pre>
+
+<script type="module">
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+import { db } from "./js/firebase.js";
+
+import {
+  getCategories,
+  getCategoryById,
+  getActiveCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory
+} from "./js/services/category-service.js";
+
+import {
+  getProducts,
+  getProductById,
+  getAdminProductById,
+  getActiveProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct
+} from "./js/services/product-service.js";
+
+import {
+  getSettings
+} from "./js/services/settings-service.js";
+
+import {
+  getProductImagePath,
+  uploadProductImage,
+  deleteProductImage
+} from "./js/services/storage-service.js";
+
+
+const output = document.getElementById("output");
+
+const counters = {
+  PASS: 0,
+  FAIL: 0,
+  BLOCKED: 0,
+  SKIP: 0
+};
+
+function resetCounters() {
+  counters.PASS = 0;
+  counters.FAIL = 0;
+  counters.BLOCKED = 0;
+  counters.SKIP = 0;
+  updateCounters();
+}
+
+function updateCounters() {
+  document.getElementById("passCount").textContent = counters.PASS;
+  document.getElementById("failCount").textContent = counters.FAIL;
+  document.getElementById("blockedCount").textContent = counters.BLOCKED;
+  document.getElementById("skipCount").textContent = counters.SKIP;
+}
+
+function clearOutput() {
+  output.textContent = "";
+  resetCounters();
+}
+
+function print(message = "") {
+  output.textContent += message + "\n";
+  output.scrollTop = output.scrollHeight;
+}
+
+function errorMessage(error) {
+  return error?.message || String(error);
+}
+
+function status(area, test, status, detail = "") {
+  counters[status]++;
+  updateCounters();
+
+  const line =
+    `[${status}] ${area} → ${test}` +
+    (detail ? ` → ${detail}` : "");
+
+  print(line);
+}
+
+function isPermissionError(error) {
+  return (
+    error?.code === "permission-denied" ||
+    /Missing or insufficient permissions/i.test(
+      errorMessage(error)
+    )
+  );
+}
+
+function isNotFoundError(error) {
+  return (
+    error?.code === "not-found" ||
+    /tidak ditemukan/i.test(errorMessage(error))
+  );
+}
+
+async function testAuth() {
+
+  print("\n==========================================");
+  print("01 AUTH");
+  print("==========================================");
+
+  const auth = getAuth();
+
+  if (!auth.currentUser) {
+    status(
+      "AUTH",
+      "User Login",
+      "BLOCKED",
+      "Belum login. Login terlebih dahulu."
+    );
+    return false;
+  }
+
+  status(
+    "AUTH",
+    "User Login",
+    "PASS",
+    auth.currentUser.email || auth.currentUser.uid
+  );
+
+  try {
+    const tokenResult =
+      await auth.currentUser.getIdTokenResult();
+
+    if (tokenResult.claims?.admin === true) {
+      status(
+        "AUTH",
+        "Admin Custom Claim",
+        "PASS",
+        "admin === true"
+      );
+    } else {
+      status(
+        "AUTH",
+        "Admin Custom Claim",
+        "BLOCKED",
+        "User login tetapi Custom Claim admin !== true."
+      );
+    }
+
+  } catch (error) {
+
+    status(
+      "AUTH",
+      "Admin Custom Claim",
+      "FAIL",
+      errorMessage(error)
+    );
+  }
+
+  return true;
+}
+
+
+async function testRules() {
+
+  print("\n==========================================");
+  print("02 FIRESTORE RULES");
+  print("==========================================");
+
+  const tests = [
+    ["categories", "Read categories"],
+    ["products", "Read products"],
+    ["settings", "Read settings/store"]
+  ];
+
+  for (const [collectionName, label] of tests) {
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(db, collectionName)
+        );
+
+      status(
+        "RULES",
+        label,
+        "PASS",
+        `Firestore mengembalikan ${snapshot.size} dokumen.`
+      );
+
+    } catch (error) {
+
+      if (isPermissionError(error)) {
+        status(
+          "RULES",
+          label,
+          "BLOCKED",
+          errorMessage(error)
+        );
+      } else {
+        status(
+          "RULES",
+          label,
+          "FAIL",
+          errorMessage(error)
+        );
+      }
+    }
+  }
+}
+
+
+async function testCategory() {
+
+  print("\n==========================================");
+  print("03 CATEGORY SERVICE");
+  print("==========================================");
+
+  let createdId = null;
+
+  try {
+
+    const api = [
+      getCategories,
+      getCategoryById,
+      getActiveCategories,
+      createCategory,
+      updateCategory,
+      deleteCategory
+    ];
+
+    if (api.some(fn => typeof fn !== "function")) {
+      throw new Error("API Category Service tidak lengkap.");
+    }
+
+    status(
+      "CATEGORY",
+      "Service API",
+      "PASS",
+      "Semua fungsi kontrak tersedia."
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "Service API",
+      "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const data = await getCategories();
+
+    status(
+      "CATEGORY",
+      "READ",
+      "PASS",
+      `${data.length} kategori.`
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "READ",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const data = await getActiveCategories();
+
+    status(
+      "CATEGORY",
+      "ACTIVE FILTER",
+      "PASS",
+      `${data.length} kategori aktif.`
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "ACTIVE FILTER",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const created = await createCategory({
+      nama: `TEST Kategori ${Date.now()}`,
+      deskripsi: "Kategori automated test",
+      aktif: true
+    });
+
+    createdId = created.id;
+
+    status(
+      "CATEGORY",
+      "CREATE",
+      "PASS",
+      `ID ${createdId}`
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "CREATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const found =
+      await getCategoryById(createdId);
+
+    if (!found) {
+      throw new Error(
+        "Kategori hasil CREATE tidak ditemukan."
+      );
+    }
+
+    status(
+      "CATEGORY",
+      "READ BY ID",
+      "PASS",
+      "Data ditemukan."
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "READ BY ID",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  try {
+
+    const updated =
+      await updateCategory(
+        createdId,
+        {
+          nama: `TEST Kategori Updated ${Date.now()}`,
+          aktif: false
+        }
+      );
+
+    if (
+      updated.aktif !== false
+    ) {
+      throw new Error(
+        "Status aktif tidak berubah menjadi false."
+      );
+    }
+
+    status(
+      "CATEGORY",
+      "UPDATE",
+      "PASS",
+      "Update berhasil."
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "UPDATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  try {
+
+    const active =
+      await getActiveCategories();
+
+    const exists =
+      active.some(
+        item => item.id === createdId
+      );
+
+    if (exists) {
+      throw new Error(
+        "Kategori nonaktif masih muncul pada active filter."
+      );
+    }
+
+    status(
+      "CATEGORY",
+      "ACTIVE AFTER UPDATE",
+      "PASS",
+      "Filter aktif benar."
+    );
+
+  } catch (error) {
+
+    status(
+      "CATEGORY",
+      "ACTIVE AFTER UPDATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  if (createdId) {
+
+    try {
+
+      await deleteCategory(createdId);
+
+      status(
+        "CATEGORY",
+        "DELETE",
+        "PASS",
+        "Delete berhasil."
+      );
+
+    } catch (error) {
+
+      status(
+        "CATEGORY",
+        "DELETE",
+        isPermissionError(error) ? "BLOCKED" : "FAIL",
+        errorMessage(error)
+      );
+    }
+
+
+    try {
+
+      const deleted =
+        await getCategoryById(createdId);
+
+      if (deleted !== null) {
+        throw new Error(
+          "Kategori masih ditemukan setelah delete."
+        );
+      }
+
+      status(
+        "CATEGORY",
+        "VERIFY DELETE",
+        "PASS",
+        "Dokumen sudah tidak ditemukan."
+      );
+
+    } catch (error) {
+
+      status(
+        "CATEGORY",
+        "VERIFY DELETE",
+        isPermissionError(error) ? "BLOCKED" : "FAIL",
+        errorMessage(error)
+      );
+    }
+  }
+}
+
+
+async function testProduct() {
+
+  print("\n==========================================");
+  print("04 PRODUCT SERVICE");
+  print("==========================================");
+
+  let createdId = null;
+  let categoryId = null;
+
+  try {
+
+    const api = [
+      getProducts,
+      getProductById,
+      getAdminProductById,
+      getActiveProducts,
+      createProduct,
+      updateProduct,
+      deleteProduct
+    ];
+
+    if (api.some(fn => typeof fn !== "function")) {
+      throw new Error("API Product Service tidak lengkap.");
+    }
+
+    status(
+      "PRODUCT",
+      "Service API",
+      "PASS",
+      "Semua fungsi kontrak tersedia."
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "Service API",
+      "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const categories =
+      await getCategories();
+
+    if (!categories.length) {
+
+      status(
+        "PRODUCT",
+        "CREATE",
+        "BLOCKED",
+        "Tidak ada kategori untuk memenuhi kategoriId."
+      );
+
+      return;
+    }
+
+    categoryId = categories[0].id;
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "CATEGORY DEPENDENCY",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const products =
+      await getProducts();
+
+    status(
+      "PRODUCT",
+      "READ",
+      "PASS",
+      `${products.length} produk.`
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "READ",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const active =
+      await getActiveProducts();
+
+    status(
+      "PRODUCT",
+      "ACTIVE FILTER",
+      "PASS",
+      `${active.length} produk aktif.`
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "ACTIVE FILTER",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  // CREATE
+  try {
+
+    const created =
+      await createProduct({
+
+        nama:
+          `TEST Produk ${Date.now()}`,
+
+        deskripsi:
+          "Produk automated test",
+
+        harga:
+          10000,
+
+        kategoriId:
+          categoryId,
+
+        gambarUrl:
+          "",
+
+        gambarPath:
+          "",
+
+        whatsapp:
+          "081234567890",
+
+        aktif:
+          true
+      });
+
+    createdId = created.id;
+
+    if (!createdId) {
+      throw new Error(
+        "createProduct() tidak mengembalikan ID."
+      );
+    }
+
+    status(
+      "PRODUCT",
+      "CREATE",
+      "PASS",
+      `ID ${createdId}`
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "CREATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  // READ BY ID ADMIN
+  try {
+
+    const found =
+      await getAdminProductById(createdId);
+
+    if (!found) {
+      throw new Error(
+        "Produk hasil CREATE tidak ditemukan."
+      );
+    }
+
+    status(
+      "PRODUCT",
+      "READ BY ID",
+      "PASS",
+      "Data ditemukan."
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "READ BY ID",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // PUBLIC READ
+  try {
+
+    const found =
+      await getProductById(createdId);
+
+    if (!found) {
+      throw new Error(
+        "Produk aktif tidak dapat dibaca oleh getProductById()."
+      );
+    }
+
+    status(
+      "PRODUCT",
+      "PUBLIC READ",
+      "PASS",
+      "Produk aktif dapat dibaca."
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "PUBLIC READ",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // UPDATE
+  try {
+
+    const updated =
+      await updateProduct(
+        createdId,
+        {
+          nama:
+            `TEST Produk Updated ${Date.now()}`,
+
+          harga:
+            15000,
+
+          deskripsi:
+            "Produk automated test updated"
+        }
+      );
+
+    if (updated.harga !== 15000) {
+      throw new Error(
+        "Harga tidak berhasil diperbarui."
+      );
+    }
+
+    status(
+      "PRODUCT",
+      "UPDATE",
+      "PASS",
+      "Update berhasil."
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "UPDATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // VERIFY UPDATE
+  try {
+
+    const updated =
+      await getAdminProductById(createdId);
+
+    if (!updated) {
+      throw new Error(
+        "Produk tidak ditemukan setelah update."
+      );
+    }
+
+    if (updated.harga !== 15000) {
+      throw new Error(
+        "Nilai update tidak tersimpan."
+      );
+    }
+
+    status(
+      "PRODUCT",
+      "VERIFY UPDATE",
+      "PASS",
+      "Data update terverifikasi."
+    );
+
+  } catch (error) {
+
+    status(
+      "PRODUCT",
+      "VERIFY UPDATE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // DELETE
+  if (createdId) {
+
+    try {
+
+      await deleteProduct(createdId);
+
+      status(
+        "PRODUCT",
+        "DELETE",
+        "PASS",
+        "Delete berhasil."
+      );
+
+    } catch (error) {
+
+      status(
+        "PRODUCT",
+        "DELETE",
+        isPermissionError(error) ? "BLOCKED" : "FAIL",
+        errorMessage(error)
+      );
+    }
+
+
+    // VERIFY DELETE
+    try {
+
+      const deleted =
+        await getAdminProductById(createdId);
+
+      if (deleted !== null) {
+        throw new Error(
+          "Produk masih ditemukan setelah delete."
+        );
+      }
+
+      status(
+        "PRODUCT",
+        "VERIFY DELETE",
+        "PASS",
+        "Dokumen sudah tidak ditemukan."
+      );
+
+    } catch (error) {
+
+      status(
+        "PRODUCT",
+        "VERIFY DELETE",
+        isPermissionError(error) ? "BLOCKED" : "FAIL",
+        errorMessage(error)
+      );
+    }
+  }
+}
+
+
+async function testSettings() {
+
+  print("\n==========================================");
+  print("05 SETTINGS SERVICE");
+  print("==========================================");
+
+  try {
+
+    if (typeof getSettings !== "function") {
+      throw new Error(
+        "getSettings() tidak tersedia."
+      );
+    }
+
+    status(
+      "SETTINGS",
+      "Service API",
+      "PASS",
+      "API settings tersedia."
+    );
+
+  } catch (error) {
+
+    status(
+      "SETTINGS",
+      "Service API",
+      "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const settings =
+      await getSettings();
+
+    if (settings === null) {
+
+      status(
+        "SETTINGS",
+        "READ",
+        "PASS",
+        "settings/store belum ada."
+      );
+
+    } else {
+
+      status(
+        "SETTINGS",
+        "READ",
+        "PASS",
+        "settings/store berhasil dibaca."
+      );
+    }
+
+  } catch (error) {
+
+    status(
+      "SETTINGS",
+      "READ",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+}
+
+
+async function testStorage() {
+
+  print("\n==========================================");
+  print("06 STORAGE SERVICE");
+  print("==========================================");
+
+  try {
+
+    if (
+      typeof getProductImagePath !== "function" ||
+      typeof uploadProductImage !== "function" ||
+      typeof deleteProductImage !== "function"
+    ) {
+      throw new Error(
+        "Export Storage Service tidak lengkap."
+      );
+    }
+
+    status(
+      "STORAGE",
+      "Module Load",
+      "PASS",
+      "Semua fungsi kontrak tersedia."
+    );
+
+  } catch (error) {
+
+    status(
+      "STORAGE",
+      "Module Load",
+      "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  const testProductId =
+    `TEST_STORAGE_${Date.now()}`;
+
+
+  // PATH
+  try {
+
+    const path =
+      getProductImagePath(
+        testProductId,
+        "jpg"
+      );
+
+    const expected =
+      `products/${testProductId}/main.jpg`;
+
+    if (path !== expected) {
+      throw new Error(
+        `Expected ${expected}, Actual ${path}`
+      );
+    }
+
+    status(
+      "STORAGE",
+      "Product Image Path",
+      "PASS",
+      path
+    );
+
+  } catch (error) {
+
+    status(
+      "STORAGE",
+      "Product Image Path",
+      "FAIL",
+      errorMessage(error)
+    );
+
+    return;
+  }
+
+
+  // INVALID EXTENSION
+  try {
+
+    let rejected = false;
+
+    try {
+
+      getProductImagePath(
+        testProductId,
+        ""
+      );
+
+    } catch (error) {
+
+      rejected =
+        error.message ===
+        "Extension gambar tidak valid.";
+    }
+
+    if (!rejected) {
+      throw new Error(
+        "Extension kosong tidak ditolak."
+      );
+    }
+
+    status(
+      "STORAGE",
+      "Invalid Extension",
+      "PASS",
+      "Extension kosong ditolak."
+    );
+
+  } catch (error) {
+
+    status(
+      "STORAGE",
+      "Invalid Extension",
+      "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // UPLOAD
+  let uploaded = null;
+
+  try {
+
+    const file =
+      new File(
+        [
+          new Uint8Array([
+            0xff, 0xd8, 0xff, 0xd9
+          ])
+        ],
+        "test.jpg",
+        {
+          type: "image/jpeg"
+        }
+      );
+
+    uploaded =
+      await uploadProductImage(
+        testProductId,
+        file
+      );
+
+    if (
+      !uploaded ||
+      typeof uploaded.url !== "string" ||
+      typeof uploaded.path !== "string"
+    ) {
+      throw new Error(
+        "Response upload tidak sesuai kontrak."
+      );
+    }
+
+    const expectedPath =
+      `products/${testProductId}/main.jpg`;
+
+    if (uploaded.path !== expectedPath) {
+      throw new Error(
+        `Path upload tidak sesuai. Expected ${expectedPath}, Actual ${uploaded.path}`
+      );
+    }
+
+    status(
+      "STORAGE",
+      "UPLOAD",
+      "PASS",
+      uploaded.path
+    );
+
+  } catch (error) {
+
+    if (isPermissionError(error)) {
+
+      status(
+        "STORAGE",
+        "UPLOAD",
+        "BLOCKED",
+        errorMessage(error)
+      );
+
+    } else {
+
+      status(
+        "STORAGE",
+        "UPLOAD",
+        "FAIL",
+        errorMessage(error)
+      );
+    }
+
+    return;
+  }
+
+
+  // DELETE
+  try {
+
+    await deleteProductImage(
+      uploaded.path
+    );
+
+    status(
+      "STORAGE",
+      "DELETE",
+      "PASS",
+      uploaded.path
+    );
+
+  } catch (error) {
+
+    status(
+      "STORAGE",
+      "DELETE",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+
+
+  // DELETE AGAIN
+  try {
+
+    await deleteProductImage(
+      uploaded.path
+    );
+
+    status(
+      "STORAGE",
+      "DELETE IDEMPOTENT",
+      "PASS",
+      "object-not-found diperlakukan sebagai sukses."
+    );
+
+  } catch (error) {
+
+    status(
+      "STORAGE",
+      "DELETE IDEMPOTENT",
+      isPermissionError(error) ? "BLOCKED" : "FAIL",
+      errorMessage(error)
+    );
+  }
+}
+
+
+async function runAllTests() {
+
+  clearOutput();
+
+  print("==========================================");
+  print("KATALOG AUTOMATED TEST");
+  print("==========================================");
+  print("Test dimulai...");
+  print("");
+
+  const loggedIn =
+    await testAuth();
+
+  if (!loggedIn) {
+    print("");
+    print("TEST DIHENTIKAN: user belum login.");
+    return;
+  }
+
+  await testRules();
+  await testCategory();
+  await testProduct();
+  await testSettings();
+  await testStorage();
+
+  print("\n==========================================");
+  print("TEST SELESAI");
+  print("==========================================");
+
+  print(
+    `PASS=${counters.PASS} | ` +
+    `FAIL=${counters.FAIL} | ` +
+    `BLOCKED=${counters.BLOCKED} | ` +
+    `SKIP=${counters.SKIP}`
+  );
+}
+
+
+document
+  .getElementById("runAllBtn")
+  .addEventListener(
+    "click",
+    runAllTests
+  );
+
+document
+  .getElementById("clearBtn")
+  .addEventListener(
+    "click",
+    clearOutput
+  );
+
+
+print(
+  "Test page siap. Pastikan sudah login sebagai admin@gmail.com, lalu klik RUN ALL TEST."
+);
+
+</script>
+
+</body>
+</html>

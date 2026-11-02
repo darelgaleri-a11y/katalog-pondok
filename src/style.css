@@ -1,0 +1,351 @@
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19243a;background:#f7f8fc;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}h1,h2,h3,p{margin-top:0}h1{letter-spacing:-.045em}h2{letter-spacing:-.03em}p{line-height:1.6;color:#647084}a{color:inherit}.topbar{height:76px;background:#fff;border-bottom:1px solid #e9edf4;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1170px)/2));gap:16px;position:sticky;top:0;z-index:10}.brand{display:flex;align-items:center;gap:9px;background:none;border:0;font-weight:850;font-size:20px;color:#17264b;letter-spacing:-.05em;white-space:nowrap}.brand svg{color:#6b4ce6}.brand span{color:#775ae6;margin-left:-7px}.topbar nav{display:flex;align-items:center;gap:9px}.topbar nav button{display:flex;align-items:center;gap:7px;border:0;background:transparent;padding:10px 13px;color:#38465c;font-weight:650;border-radius:10px}.topbar nav button:hover{background:#f3f0ff}.topbar nav .cartBtn{background:#7050e8;color:#fff}main{max-width:1170px;margin:auto;padding:34px 22px 84px;min-height:calc(100vh - 140px)}.hero{background:linear-gradient(115deg,#251952,#6a4ddb 68%,#9a84ff);color:#fff;border-radius:24px;padding:70px 65px;margin-bottom:38px;position:relative;overflow:hidden}.hero:after{content:"";width:340px;height:340px;border:55px solid #ffffff0b;border-radius:50%;position:absolute;right:-90px;top:-110px}.eyebrow{font-size:11px;letter-spacing:.2em;font-weight:800;text-transform:uppercase}.hero .eyebrow{color:#d9d0ff}.hero h1{font-size:clamp(34px,5vw,54px);margin:12px 0 12px}.hero p{color:#eeeaff;max-width:570px;font-size:17px;margin-bottom:0}.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}.sectionHead h2{font-size:25px;margin:0}.sectionHead span{color:#7c8798}.storeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.storeCard,.productCard{background:#fff;border:1px solid #e8ebf2;border-radius:18px;overflow:hidden;text-align:left;box-shadow:0 9px 24px #0b1c3910}.storeCard{padding:0;color:inherit;transition:transform .2s,box-shadow .2s}.storeCard:hover{transform:translateY(-3px);box-shadow:0 14px 28px #0b1c3920}.storeIllustration{height:175px;display:flex;align-items:center;justify-content:center;color:#fff}.tone0{background:linear-gradient(120deg,#8674eb,#b6a8fb)}.tone1{background:linear-gradient(120deg,#41a9af,#7dd7d4)}.tone2{background:linear-gradient(120deg,#f39e7c,#ffc3a4)}.cardContent{padding:21px}.cardContent h3{font-size:19px;margin:6px 0}.cardContent p{margin:7px 0 14px;font-size:14px}.linkText{color:#674ad7;font-weight:800;font-size:14px}.back{border:0;background:none;padding:8px 0;display:inline-flex;align-items:center;gap:7px;color:#6751c6;font-weight:800;margin-bottom:18px}.storeBanner{display:flex;align-items:center;gap:24px;background:linear-gradient(110deg,#ece7ff,#e8f0ff);padding:32px;border-radius:22px;margin-bottom:34px}.storeBanner>svg{flex-shrink:0;color:#7957df}.storeBanner h1{margin:7px 0;font-size:36px}.storeBanner p{margin:0}.sectionHead input{max-width:300px}.productGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}.productCard .photo{height:210px;display:flex;align-items:center;justify-content:center;background:#f0eff7;color:#8a7cb8;overflow:hidden}.productCard img{width:100%;height:100%;object-fit:cover}.productCard .cardContent{padding:16px}.productCard small{color:#8978c6;font-weight:750}.productCard h3{font-size:17px;min-height:42px}.productCard b{color:#271f4e}.productCard p{margin-bottom:14px}.primary{border:0;background:#7253e6;color:#fff;border-radius:10px;padding:11px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:760}.primary:hover:not(:disabled){background:#5d3fc9}.productCard .primary{width:100%}.checkoutGrid{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}.panel{background:#fff;border:1px solid #e6eaf1;border-radius:18px;padding:26px;box-shadow:0 5px 15px #18254408}.panel h3{font-size:19px}.cartRow{border-bottom:1px solid #e9edf3;padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}.cartRow p{font-size:13px;margin:5px 0 0}.cartRow>b{white-space:nowrap}.qty{display:flex;align-items:center;gap:9px}.qty button{border:1px solid #e3e4e9;background:#f8f8fc;border-radius:8px;width:29px;height:29px;display:grid;place-items:center}.total{display:flex;justify-content:space-between;gap:8px;padding:24px 0 5px}.total strong{font-size:22px;color:#6646d7}.panel form{display:grid;gap:15px}.panel label{font-size:13px;font-weight:750;display:grid;gap:7px;color:#4e596f}input,textarea,select{width:100%;background:#fff;border:1px solid #dce1e9;border-radius:10px;padding:12px;outline-color:#7a5be8;color:#20304c}textarea{resize:vertical}.muted{font-size:13px;margin:0}.big{padding:15px}.paymentNote{background:#f7f4ff;border:1px solid #e6dcff;border-radius:11px;padding:14px}.paymentNote p{font-size:13px;white-space:pre-wrap;margin:8px 0}.paymentNote small{color:#7158a7}.adminHero{display:flex;justify-content:space-between;align-items:center;gap:20px;border-radius:20px;padding:32px;margin-bottom:22px;background:#eae5ff}.adminHero h1{font-size:38px;margin:8px 0}.adminHero p{margin:0}.demoTag{font-size:11px;padding:10px;background:#fff4d6;color:#735516;border-radius:9px;font-weight:850;max-width:190px;text-align:center}.tabs{display:flex;gap:6px;border-bottom:1px solid #e0e5ee;margin-bottom:20px}.tabs button{border:0;background:none;padding:14px 22px;color:#66748b;font-weight:750;border-bottom:3px solid transparent}.tabs button.active{color:#6743d7;border-color:#6743d7}.editor{max-width:640px}.editor h2{margin:0 0 22px}.adminRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 0;border-bottom:1px solid #ecedf2}.adminRow:last-child{border:0}.adminRow p{margin:5px 0 0;font-size:13px}.actions{display:flex;align-items:center;gap:6px}.actions button{display:flex;align-items:center;justify-content:center;border:1px solid #e4e5ec;border-radius:8px;background:#fff;padding:9px;color:#5e6880}.actions .danger{color:#d43d5f}.actions button:hover{background:#f4f1ff}footer{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;color:#8993a3;border-top:1px solid #e8ebf2;padding:22px;text-align:center}@media(max-width:950px){.productGrid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:55px 35px}}@media(max-width:700px){.topbar{height:auto;padding:15px;flex-wrap:wrap}.topbar nav{width:100%;justify-content:space-between}.topbar nav button{font-size:13px;padding:8px}main{padding:20px 14px 60px}.hero{padding:38px 24px;border-radius:17px}.storeGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.productGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.storeIllustration{height:125px}.cardContent{padding:14px}.storeBanner{padding:22px}.checkoutGrid{grid-template-columns:1fr}.sectionHead{align-items:flex-start}.sectionHead input{max-width:50%}.adminHero{display:block}.demoTag{display:inline-block;margin-top:15px}.adminRow{align-items:flex-start}.actions{flex-wrap:wrap;justify-content:end}.panel{padding:18px}.cartRow{flex-wrap:wrap}.productCard .photo{height:165px}}@media(max-width:390px){.storeGrid{grid-template-columns:1fr}.productGrid{grid-template-columns:1fr 1fr}.brand{font-size:18px}.sectionHead{flex-wrap:wrap}.sectionHead input{max-width:100%}}
+.modeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.modeCard{text-align:left;background:#fff;border:1px solid #e4e6f0;border-radius:20px;padding:32px;box-shadow:0 9px 24px #0b1c3910;color:#29204e}.modeCard:hover{border-color:#947fe9;transform:translateY(-2px)}.modeCard>svg{color:#7050e8}.modeCard h2{margin:18px 0 10px}.modeCard strong{color:#7253e6}.modeCard p{min-height:54px}.dayOptions{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}.dayOptions label{display:flex;gap:8px;align-items:center;border:1px solid #e6e7ef;padding:10px;border-radius:10px}.dayOptions input{width:auto}.editor h2{display:flex;align-items:center;gap:9px}.paymentNote b{display:inline-flex;align-items:center;gap:6px}.tabs{overflow:auto}@media(max-width:700px){.modeGrid{grid-template-columns:1fr}.modeCard{padding:24px}.modeCard p{min-height:0}}
+
+.authPanel{max-width:460px;margin:55px auto}.setupPage{max-width:650px;margin:70px auto}.errorText{color:#b91c1c;background:#fff0f0;padding:12px;border-radius:9px}.syncLine{margin-bottom:14px}
+
+.orderCard{border-top:1px solid #e7e9f0;padding:20px 0}.orderCard:first-of-type{margin-top:12px}.orderCard p{margin:8px 0;font-size:14px}.orderCard ul{padding-left:22px;color:#414960;font-size:14px}.orderCard label{display:grid;gap:8px;max-width:350px}.orderCard small{color:#718096}
+
+/* V5.2: filter pesanan untuk admin */
+.orderFilters{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:18px 0 8px}
+.orderFilters label{flex:1 1 170px;min-width:140px}
+.orderFilters input,.orderFilters select{width:100%}
+.orderFilters button{min-height:40px;white-space:nowrap}
+
+/* V11: kontrol privasi admin */
+.privacyToggle{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;line-height:1.4;cursor:pointer;margin:8px 12px 8px 0}.privacyToggle input{width:18px;height:18px;flex:none}
+
+/* V14: pemberitahuan dan konfirmasi penggunaan data saat checkout */
+.privacyNotice{padding:14px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;color:#253044;font-size:14px;line-height:1.55}.privacyNotice p{margin:8px 0 0}.privacyConsent{display:flex!important;align-items:flex-start;gap:10px;line-height:1.45;font-size:14px}.privacyConsent input{width:18px!important;height:18px;min-width:18px;margin-top:2px}
+
+/* V15 — peningkatan pengalaman pelanggan pada layar kecil */
+.storeSearch{margin:-10px 0 20px;max-width:460px}.storeSearch label{display:block;font-weight:750;font-size:13px;margin-bottom:7px;color:#4e596f}.storeSearch input{width:100%}.checkoutSteps{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 16px}.checkoutSteps span{border:1px solid #e1e5ed;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:650;background:#fff;color:#647084}.checkoutSteps .stepDone{background:#eef9f3;color:#21744a;border-color:#c8ead4}.checkoutSteps .stepActive{background:#f1edff;color:#6043c1;border-color:#d9d0fa}.mobileCartFloat{display:none}.productCard img{background:#f2f1f8}.storeSearch input:focus-visible,.mobileCartFloat:focus-visible{outline:3px solid #b5a5ff;outline-offset:3px}@media(max-width:700px){main{padding-bottom:110px}.mobileCartFloat{position:fixed;bottom:14px;left:14px;right:14px;width:calc(100% - 28px);display:flex;align-items:center;justify-content:center;gap:9px;z-index:12;background:#7050e8;color:white;border:none;border-radius:14px;padding:14px 12px;box-shadow:0 9px 25px #4c2daa55;font-weight:800;font-size:14px}.mobileCartFloat span{font-size:12px;font-weight:600;opacity:.92}.checkoutSteps{gap:6px}.checkoutSteps span{font-size:11px;padding:7px 9px}.storeSearch{margin:0 0 17px}.productCard h3{min-height:0}}
+
+/* V16: dashboard operasional santri */
+.opsStats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}.opsStats>div{padding:16px;border:1px solid #e1e5e9;border-radius:12px;background:#f8fafc;display:flex;flex-direction:column;gap:7px}.opsStats b{font-size:1.25rem;overflow-wrap:anywhere}.opsStats small{color:#566273}.opsTableWrap{overflow-x:auto}.opsTable{width:100%;border-collapse:collapse;margin:10px 0 24px}.opsTable th,.opsTable td{padding:12px;border-bottom:1px solid #ddd;text-align:left}.opsTable th{background:#f4f6f9}
+/* V19: portal petugas terpisah dari pelanggan dan admin */
+.staffPage{max-width:920px;margin:0 auto;padding:24px 16px 72px}.staffHeader{display:flex;justify-content:space-between;align-items:center;gap:16px}.staffPage .panel{margin:18px 0}.staffControls{display:flex;gap:14px;align-items:end;flex-wrap:wrap}.staffControls label{display:flex;gap:8px;align-items:center}.staffControls input[type=date]{max-width:200px}.staffPage li{margin:6px 0}
+.receiptForm{display:grid;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid #ddd}.receiptForm label{display:block}.receiptForm input:not([type=checkbox]),.receiptForm select{display:block;width:100%;margin-top:6px}.receiptForm input[type=checkbox]{width:auto;margin-right:8px}
+
+.trackPanel{max-width:650px;margin:30px auto}.trackPanel form{display:grid;gap:15px}.trackingNav{color:#5d3fc9;font-weight:700;text-decoration:none;padding:10px}.trackPanel h2{font-size:21px}
+
+/* V32 Simple Mode */
+.simpleHero{text-align:center;max-width:800px;margin-inline:auto}
+.simpleModeGrid{max-width:920px;margin-inline:auto}
+.simpleModeGrid .modeCard{min-height:215px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.simpleModeGrid .studentChoice{border:2px solid #2e986a;background:linear-gradient(135deg,#effbf4,#fff)}
+.simpleModeGrid .modeCard strong{margin-top:auto}
+.simpleTrack{text-align:center;margin:24px 0}.simpleTrack a{display:inline-flex;align-items:center;gap:8px;color:inherit;font-weight:700}
+.simpleAdminNav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}
+.simpleAdminNav button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:62px;padding:10px;border:1px solid #d5dfe0;border-radius:12px;background:white;cursor:pointer;font-weight:700}
+.simpleAdminNav button.active,.simpleSubNav button.active,.simpleAdvanced button.active{border-color:#32966b;background:#e9f8ef;color:#14643b}
+.simpleSubNav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.simpleSubNav button,.simpleAdvanced button{padding:10px 14px;border:1px solid #d5dfe0;border-radius:10px;background:#fff;cursor:pointer;font-weight:600}
+.simpleAdvanced{display:flex;flex-wrap:wrap;gap:9px;padding:14px;background:#f4f7f7;border-radius:12px;margin:12px 0 20px}.simpleAdvanced p{width:100%;margin:0}
+.staffStats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}.staffStats>div{border:1px solid #d9e6df;border-radius:12px;padding:18px;background:#f6fbf8;display:flex;flex-direction:column;gap:4px;text-align:center}.staffStats strong{font-size:32px}.staffStats span{font-size:13px}
+.staffOrderSimple{margin-bottom:14px}.staffOrderSimple .simpleDeliveryButton{width:100%;min-height:50px}
+.staffPrivacy{display:flex;align-items:center;gap:8px;margin:20px 0}.staffSimpleHead .staffControls{margin:12px 0}.staffSimpleHead .simpleSubNav button{flex:1}
+@media(max-width:720px){.simpleAdminNav{grid-template-columns:repeat(2,minmax(0,1fr))}.simpleAdminNav button{min-height:56px;font-size:13px}.simpleModeGrid{grid-template-columns:1fr}.simpleModeGrid .modeCard{min-height:0}.staffStats strong{font-size:26px}}
+
+.simpleOverviewStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}.simpleOverviewStats>div{display:flex;flex-direction:column;gap:6px;padding:18px;background:#f5f9f6;border-radius:12px;text-align:center}.simpleOverviewStats strong{font-size:28px}.simpleOverviewStats span{font-size:13px}.simpleOverviewActions{display:flex;gap:10px;flex-wrap:wrap}.simpleOverviewActions button{display:flex;align-items:center;gap:8px;border:1px solid #d5dfe0;border-radius:12px;background:#fff;padding:14px;font-weight:700;cursor:pointer}@media(max-width:720px){.simpleOverviewStats{grid-template-columns:1fr 1fr}.simpleOverviewActions button{width:100%}}
+
+/* V32.2: pertanyaan status melalui WhatsApp, tanpa menu pelacakan. */
+.simpleTrack{display:flex;justify-content:center;align-items:center;gap:9px;color:#3f5b51;font-size:14px;line-height:1.5;text-align:center}
+.legacyNotice{max-width:600px;margin:12vh auto 30px;padding:0 16px}
+.legacyNotice .panel{text-align:center;padding:30px 24px}
+.legacyNotice .panel>svg{color:#25865a;margin:0 auto}
+.legacyNotice h1{margin:14px 0}
+.legacyNotice p{line-height:1.65}
+.legacyHomeLink{display:inline-block;background:#257a53;color:#fff;text-decoration:none;font-weight:700;border-radius:12px;padding:12px 22px;margin-top:16px}
+.legacyHomeLink:focus-visible{outline:3px solid #f2bf46;outline-offset:2px}
+
+/* V32.3: pagination admin (50 pesanan per halaman), nyaman di layar kecil. */
+.simpleOrderPagination {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin:0.8rem 0 1rem;padding:0.6rem 0;}
+.simpleOrderPagination span {font-size:0.85rem;color:#52606d;}
+.simpleOrderPagination button {min-height:42px;}
+
+
+/* V32.3.1 — tombol kembali mengambang khusus daftar panjang di HP.
+   Tampil setelah pengguna menggulir, tidak menutupi tombol keranjang. */
+.quickBackFloat{display:none}
+@media (max-width:700px){
+  .quickBackFloat{
+    position:fixed;
+    left:14px;
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index:13;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:48px;
+    max-width:calc(100vw - 28px);
+    padding:11px 17px;
+    border:1px solid #d6caff;
+    border-radius:999px;
+    background:#fff;
+    color:#5a3db6;
+    font-size:14px;
+    font-weight:800;
+    box-shadow:0 8px 22px #2b165a30;
+    cursor:pointer;
+  }
+  .quickBackFloat.aboveCart{bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
+  .quickBackFloat:focus-visible{outline:3px solid #7253e6;outline-offset:3px}
+}
+
+
+/* V32.4: panduan bergambar 4 langkah dari beranda. */
+.guideEntryCard{margin:18px auto 0;max-width:920px;width:100%;display:flex;align-items:center;gap:16px;border:1px solid #d9dfef;border-radius:18px;background:#fff;padding:18px 20px;box-shadow:0 8px 22px #0b1c3910;text-align:left;color:#22314d}
+.guideEntryCard:hover{border-color:#8a73ea;transform:translateY(-1px)}
+.guideEntryIcon{width:56px;height:56px;display:grid;place-items:center;border-radius:16px;background:#f2eeff;color:#6d50e6;flex:none}
+.guideEntryText{display:flex;flex-direction:column;gap:5px;flex:1}
+.guideEntryText strong{font-size:18px;color:#1f2950}
+.guideEntryText small{font-size:14px;color:#5e6c83;line-height:1.55}
+.guideEntryAction{font-weight:800;color:#6b4ce6;white-space:nowrap}
+.guideOverlay{position:fixed;inset:0;z-index:30;background:#0f172a80;padding:22px;display:flex;align-items:center;justify-content:center}
+.guideModal{width:min(920px,100%);max-height:min(90vh,100%);overflow:auto;background:#fff;border-radius:24px;padding:24px;box-shadow:0 22px 50px #0b1c3940}
+.guideHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.guideHeader h2{margin:8px 0 8px;font-size:32px;color:#17264b}
+.guideHeader p{margin:0;max-width:640px}
+.guideClose{border:1px solid #d9dfef;background:#fff;color:#4d5a73;border-radius:12px;padding:10px 14px;font-weight:700;white-space:nowrap}
+.guideStepsGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.guideStepCard{border:1px solid #e6ebf2;border-radius:18px;padding:18px;background:#fcfdff}
+.guideStepCard h3{margin:12px 0 8px;font-size:21px;color:#17264b}
+.guideStepCard p{margin:0;font-size:14px}
+.guideStepBadge{display:inline-flex;align-items:center;justify-content:center;min-width:110px;padding:8px 14px;border-radius:999px;color:#fff;font-weight:800;font-size:12px;letter-spacing:.03em}
+.guideTip{margin-top:16px;padding:16px;border:1px solid #dbe6de;border-radius:16px;background:#f3fbf6}
+.guideTip b{display:block;color:#165c3c;margin-bottom:6px}
+.guideTip p{margin:0;color:#486154}
+.guideActions{display:flex;justify-content:flex-end;margin-top:18px}
+@media(max-width:700px){
+  .guideEntryCard{padding:16px;align-items:flex-start;flex-wrap:wrap}
+  .guideEntryAction{width:100%}
+  .guideOverlay{padding:10px}
+  .guideModal{padding:18px;border-radius:18px;max-height:94vh}
+  .guideHeader{flex-direction:column}
+  .guideHeader h2{font-size:26px}
+  .guideClose{width:100%}
+  .guideStepsGrid{grid-template-columns:1fr}
+}
+
+/* Ilustrasi ikon besar agar empat tahapan mudah dipahami dari HP. */
+.guideStepIllustration{height:145px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:14px;margin-bottom:12px;color:#fff}
+.guideStepIllustration.tone0{background:linear-gradient(135deg,#7861e8,#aa9bf7)}
+.guideStepIllustration.tone1{background:linear-gradient(135deg,#287e83,#72c9cb)}
+.guideStepIllustration.tone2{background:linear-gradient(135deg,#cc7558,#f4af91)}
+.guideStepArtIcon{width:104px;height:104px;border:2px solid #ffffff5c;border-radius:28px;background:#ffffff26;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px #131b3b30}
+.guideStepArtNum{position:absolute;top:11px;left:13px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#5130a3;font-size:18px;font-weight:900}
+.guideClose:focus-visible,.guideEntryCard:focus-visible,.guideActions button:focus-visible{outline:3px solid #6b4ce6;outline-offset:3px}
+@media(max-width:700px){.guideStepIllustration{height:118px}.guideStepArtIcon{height:88px;width:88px}}
+
+
+/* V32.5 — tutorial otomatis sekali per browser, satu langkah per layar. */
+.guideOneStep{width:min(560px,100%);max-height:min(92dvh,96vh)}
+.guideOneStep .guideHeader h2{font-size:clamp(23px,4vw,30px)}
+.guideProgress{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0 12px;color:#554490;font-size:13px}
+.guideProgressDots{display:flex;gap:6px;flex:1;justify-content:flex-end}
+.guideProgressDots span{height:7px;width:32px;max-width:20%;border-radius:20px;background:#e4e1ef}
+.guideProgressDots span.done{background:#7452df}
+.guideOneStep .guideStepsGrid{grid-template-columns:minmax(0,1fr);margin-top:8px}
+.guideOneStep .guideStepCard{padding:15px 18px;text-align:center}
+.guideOneStep .guideStepIllustration{height:128px}
+.guideOneStep .guideStepCard h3{font-size:22px;margin:10px 0 8px}
+.guideOneStep .guideStepCard p{font-size:15px;line-height:1.65}
+.guideOneStep .guideStepBadge{margin:4px auto 0}
+.guideHelpText{font-size:13px;color:#607086;margin:13px 0 0;text-align:center}
+.guideOneStep .guideActions{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.guideOneStep .guideActions .primary{margin-left:auto;min-width:150px;min-height:49px}
+.guidePrevious{padding:12px 16px;border:1px solid #d9dce6;border-radius:10px;background:#fff;color:#51406b;font-weight:750;min-height:49px}
+.guidePrevious:focus-visible{outline:3px solid #7253e6;outline-offset:2px}
+@media(max-width:700px){
+ .guideOneStep{padding:16px;max-height:95dvh}
+ .guideOneStep .guideHeader{gap:10px}
+ .guideOneStep .guideHeader h2{margin-bottom:5px}
+ .guideOneStep .guideHeader p{font-size:13px}
+ .guideOneStep .guideClose{width:auto}
+ .guideOneStep .guideStepIllustration{height:110px}
+ .guideOneStep .guideStepCard{padding:13px}
+ .guideOneStep .guideStepCard h3{font-size:20px}
+ .guideOneStep .guideActions button{flex:1}
+}
+
+
+/* V32.6 — Animasi ringan ketika katalog pertama kali mengambil data.
+   Hanya CSS: tidak mengunduh GIF/video dan tidak memperlambat checkout. */
+.catalogLoadingScreen{max-width:none;min-height:100svh;display:grid;place-items:center;padding:28px 16px;background:radial-gradient(circle at 50% 12%,#e9e3ff 0%,#f7f8fc 55%)}
+.catalogLoadingCard{width:min(100%,440px);display:flex;flex-direction:column;align-items:center;text-align:center;background:#fff;border:1px solid #e6e5f5;box-shadow:0 20px 55px #321d7220;border-radius:24px;padding:35px 26px 26px}
+.catalogLoadingArtwork{width:154px;height:148px;position:relative;display:grid;place-items:center;margin-bottom:2px}
+.catalogLoadingHalo{position:absolute;width:132px;height:132px;border-radius:50%;background:radial-gradient(circle,#efebff 0%,#f8f5ff 63%,transparent 70%)}
+.catalogLoadingBag{position:relative;display:grid;place-items:center;width:88px;height:88px;background:linear-gradient(145deg,#8367ed,#6141d7);color:#fff;border-radius:25px;box-shadow:0 14px 25px #6141d741;animation:catalogBagFloat 2.2s ease-in-out infinite}
+.catalogLoadingSpark{position:absolute;width:12px;height:12px;border:3px solid #997dff;border-radius:4px;transform:rotate(15deg);animation:catalogSpark 2.3s ease-in-out infinite}
+.catalogLoadingSpark.one{top:21px;left:13px;animation-delay:.05s}
+.catalogLoadingSpark.two{top:24px;right:9px;width:9px;height:9px;border-color:#4ba88b;animation-delay:.65s}
+.catalogLoadingSpark.three{bottom:20px;right:17px;width:8px;height:8px;border-color:#f0b75e;animation-delay:1.2s}
+.catalogLoadingCard h1{font-size:clamp(23px,4vw,29px);line-height:1.25;margin:0 0 11px;color:#241953;letter-spacing:-.035em}
+.catalogLoadingCard>p{font-size:15px;color:#626982;line-height:1.65;max-width:330px;margin:0}
+.catalogLoadingDots{display:flex;align-items:center;justify-content:center;gap:7px;height:35px;margin-top:10px}
+.catalogLoadingDots span{width:8px;height:8px;border-radius:50%;background:#7454e9;animation:catalogDot 1.1s ease-in-out infinite}
+.catalogLoadingDots span:nth-child(2){animation-delay:.18s}.catalogLoadingDots span:nth-child(3){animation-delay:.36s}
+.catalogLoadingTrack{margin-top:7px;position:relative;overflow:hidden;width:min(100%,240px);height:5px;border-radius:999px;background:#eeebfb}
+.catalogLoadingTrack span{position:absolute;inset:0 auto 0 0;width:35%;border-radius:inherit;background:#7554e9;animation:catalogTrack 1.6s ease-in-out infinite}
+.catalogLoadRetrySubtle{margin-top:20px;background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;color:#6a6881;font-size:13px;padding:8px}
+.catalogLoadErrorDetails{margin-top:14px!important;padding:10px 12px;background:#fff3f3;color:#a43442!important;border-radius:10px;overflow-wrap:anywhere;font-size:13px!important;max-width:100%!important}
+.catalogLoadRetry{margin-top:22px;min-width:164px}
+.catalogLoadingError .catalogLoadingBag{animation:none;box-shadow:none;background:#6f7892}
+.catalogLoadingError .catalogLoadingHalo{background:radial-gradient(circle,#ecedf3 0%,#f8f9fc 63%,transparent 70%)}
+@keyframes catalogBagFloat{0%,100%{transform:translateY(5px) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
+@keyframes catalogSpark{0%,100%{opacity:.35;transform:translateY(2px) rotate(15deg) scale(.72)}50%{opacity:1;transform:translateY(-3px) rotate(38deg) scale(1.08)}}
+@keyframes catalogDot{0%,70%,100%{opacity:.4;transform:translateY(0)}35%{opacity:1;transform:translateY(-6px)}}
+@keyframes catalogTrack{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
+@media(prefers-reduced-motion:reduce){.catalogLoadingBag,.catalogLoadingSpark,.catalogLoadingDots span,.catalogLoadingTrack span{animation:none!important}.catalogLoadingTrack span{width:45%}}
+@media(max-width:420px){.catalogLoadingCard{padding:28px 19px 24px;border-radius:19px}.catalogLoadingArtwork{height:134px}.catalogLoadingCard h1{font-size:24px}}
+
+/* V32.8 — variasi ukuran/warna opsional, stok dan harga per pilihan. */
+.variantSelectLabel{display:flex!important;flex-direction:column;gap:7px;margin-top:13px;margin-bottom:6px;font-size:13px;font-weight:750;color:#334155}
+.variantSelectLabel select{width:100%;min-height:46px;padding:9px 10px;border:1px solid #c9cde1;border-radius:11px;background:#fff;font-size:13px;color:#25324b}
+.variantSelectLabel select:focus-visible{outline:3px solid #a99af7;outline-offset:2px}
+.variantProductCard .cardContent h3{min-height:0}
+.variantStockNote{margin:6px 0 11px!important;font-size:13px;color:#51617a}
+.variantListButtons{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.variantListButtons .variantAdd{margin:0}
+.variantEditorForm{display:grid;gap:14px}
+.variantEditorHead{display:flex;align-items:flex-start;flex-direction:column;gap:5px;margin:8px 0 0}
+.variantEditorHead strong{font-size:17px;color:#17264b}
+.variantEditorHead small{color:#6b7280}
+.variantEditorRow{border:1px solid #d9deea;background:#fafbff;border-radius:14px;padding:14px;display:grid;gap:10px}
+.variantEditorRowTitle{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.variantEditorFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.variantEditorFields label{min-width:0}
+.variantEditorFields input{width:100%;padding:10px}
+.variantRemove{display:inline-flex;gap:5px;align-items:center;border:0;background:#fff2f2;color:#a43a3a;padding:8px 10px;border-radius:9px;font-size:13px}
+.variantAdd{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #9d8add;background:#f7f4ff;color:#573cc2;border-radius:11px;padding:11px 13px;font-weight:750}
+.variantAdd:hover:not(:disabled){background:#eee9ff}
+@media(max-width:530px){.variantEditorFields{grid-template-columns:1fr 1fr;gap:9px}.variantEditorFields label{font-size:12px}.variantEditorFields input{padding:9px;font-size:14px}.variantListButtons{width:100%}.variantListButtons button{flex:1}}
+
+/* V32.9 — Foto toko, galeri maksimal 5 foto, dan editor unggah ringan */
+.storePhotoV329{position:relative;overflow:hidden;background:#eeebf9}
+.storePhotoV329 img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+.storeCard:hover .storePhotoV329 img{transform:scale(1.035)}
+.storeLogoV329{height:42px;width:42px;object-fit:cover;border-radius:12px;border:1px solid #e0e3eb;float:right;margin:0 0 6px 8px}
+.storeBannerWithCover{position:relative;overflow:hidden;background:#382b56;color:#fff}
+.storeBannerWithCover:after{content:"";position:absolute;inset:0;background:linear-gradient(95deg,#141129d9,#1411298c)}
+.storeBannerWithCover .storeHeroCover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.storeBannerWithCover>div,.storeBannerWithCover>.storeHeroLogo,.storeBannerWithCover>svg{position:relative;z-index:1}
+.storeBannerWithCover p{color:#eae6f3}
+.storeBannerWithCover .eyebrow{color:#fff}
+.storeHeroLogo{height:60px;width:60px;flex:none;object-fit:cover;background:#fff;border-radius:14px}
+.productPhotoV329{position:relative}
+.productPhotoOpen{display:block;width:100%;height:100%;padding:0;background:none;border:0;color:inherit;cursor:zoom-in;position:relative}
+.productPhotoOpen img{display:block;width:100%;height:100%;object-fit:cover}
+.photoCount{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:5px;border-radius:999px;background:#172036cf;color:#fff;padding:5px 9px;font-weight:700;font-size:12px}
+.productPhotoOpen:focus-visible{outline:4px solid #7050e8;outline-offset:-4px}
+.productGalleryOverlay{position:fixed;inset:0;background:#0b1022d9;z-index:80;display:flex;align-items:center;justify-content:center;padding:14px}
+.productGalleryModal{max-height:96vh;overflow:auto;width:min(700px,100%);border-radius:18px;background:#fff;padding:14px;box-shadow:0 14px 40px #0008}
+.galleryModalHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 4px 12px}
+.galleryModalHead strong{font-size:17px;overflow-wrap:anywhere}
+.galleryModalHead button{border:0;background:#f1f2f5;color:#222;border-radius:50%;width:42px;height:42px;display:grid;place-items:center}
+.galleryModalImage{position:relative;background:#f4f4f6;border-radius:13px;overflow:hidden;display:grid;place-items:center;touch-action:pan-y}
+.galleryModalImage>img{display:block;max-height:min(65vh,600px);width:100%;object-fit:contain;min-height:180px}
+.galleryModalImage button{position:absolute;top:50%;transform:translateY(-50%);border:0;border-radius:50%;background:#fffE;box-shadow:0 3px 12px #1113;color:#17233b;width:42px;height:42px;display:grid;place-items:center}
+.galleryPrevious{left:8px}.galleryNext{right:8px}
+.galleryIndex{text-align:center;margin:12px 0 8px;font-size:13px}
+.galleryThumbnails{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+.galleryThumbnails button{padding:2px;width:64px;height:64px;border-radius:8px;border:2px solid transparent;background:#fff}
+.galleryThumbnails button.active{border-color:#7050e8}
+.galleryThumbnails img{width:100%;height:100%;border-radius:5px;object-fit:cover}
+.photoAdminFields{display:grid;gap:9px;border:1px solid #e5e5ed;padding:14px;border-radius:14px;background:#fafbff}
+.photoAdminFields h3{margin:0;font-size:16px}
+.photoAdminFields h3 small{font-size:12px;color:#647084}
+.photoAdminList{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:10px}
+.photoAdminThumb{min-width:0;border:1px solid #e0e5ed;padding:7px;border-radius:11px;background:#fff}
+.photoAdminThumb>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}
+.photoAdminThumb small{font-size:11px;display:block;text-align:center;color:#556477;font-weight:800;margin:5px 0}
+.photoAdminActions{display:flex;gap:4px;justify-content:center}
+.photoAdminActions button{border:1px solid #d9dce9;border-radius:8px;padding:7px;display:grid;place-items:center;background:#fff}
+.photoUploadLabel{display:flex!important;align-items:center;justify-content:center;gap:9px;padding:13px;border:2px dashed #a697eb;border-radius:12px;background:#f4f1ff;color:#4e38b0!important;font-weight:800!important;cursor:pointer}
+.photoUploadLabel input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.photoLinkDetails{font-size:13px}.photoLinkDetails summary{cursor:pointer;color:#7050e8;font-weight:700}
+.photoLinkRow{display:flex;gap:7px;margin-top:10px}.photoLinkRow button{border:1px solid #d8dbea;background:#fff;border-radius:9px;padding:8px 12px;font-weight:700}
+@media(max-width:700px){.galleryModalImage>img{max-height:58vh}.photoAdminList{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.storePhotoV329 img{transition:none}.storeCard:hover .storePhotoV329 img{transform:none}}
+
+
+/* V33 — dua layanan, alamat pengiriman hanya untuk belanja umum. */
+.generalShippingFields{display:grid;gap:14px;min-width:0;margin:10px 0 0;padding:17px;background:#f7fbff;border:1px solid #d9e4f0;border-radius:14px}
+.generalShippingFields legend{display:inline-flex;align-items:center;gap:8px;font-size:17px;font-weight:800;color:#243b62;padding:0 8px}
+.generalShippingFields label{display:grid;gap:6px;color:#405475;font-weight:700}
+.generalShippingFields input{min-width:0}
+.shippingFeeNotice{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:10px;background:#fff5e7;color:#8a5314}
+.shippingFeeNotice svg{flex:none;margin-top:2px}
+.shippingFeeNotice p{margin:0;font-size:13px;color:#785328}
+.adminShippingSummary{padding:11px 12px;border:1px solid #dbe6f2;border-radius:9px;background:#f6f9fe;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+@media(max-width:700px){.generalShippingFields{padding:13px}.generalShippingFields legend{font-size:16px}}
+
+/* V33: bantuan tetap tersedia di masing-masing katalog, tanpa tombol pindah layanan. */
+.laneGuideShortcut{display:inline-flex;align-items:center;gap:8px;margin:-15px 0 24px;padding:11px 16px;border:1px solid #cdc3ee;border-radius:999px;background:#fff;color:#5a3db6;font-weight:750;cursor:pointer}
+.laneGuideShortcut:hover{background:#f5f1ff}
+.laneGuideShortcut:focus-visible{outline:3px solid #8168dc;outline-offset:3px}
+
+/* V33.1: identitas visual hanya berlaku untuk pelanggan pada katalog terpilih. */
+.brandedCatalog .brand{min-width:0;max-width:min(65vw,560px)}
+.brandedCatalog .catalogBrandText{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--catalog-primary);font-size:18px;letter-spacing:-.02em}
+.catalogBrandLogo{display:block;width:43px;height:43px;object-fit:contain;flex:none;border-radius:9px}
+.brandedCatalog .brand>svg{color:var(--catalog-primary)}
+.brandedCatalog .topbar nav .cartBtn,.brandedCatalog .primary,.brandedCatalog .mobileCartFloat{background:var(--catalog-primary);color:#fff}
+.brandedCatalog .primary:hover:not(:disabled){filter:brightness(.87);background:var(--catalog-primary)}
+.brandedCatalog .storeBanner{background:var(--catalog-soft)}
+.brandedCatalog .storeBanner>svg{color:var(--catalog-primary)}
+.brandedCatalog .storeBanner .eyebrow,.brandedCatalog .linkText,.brandedCatalog .back,.brandedCatalog .laneGuideShortcut{color:var(--catalog-primary)}
+.brandedCatalog .storeBanner .eyebrow{letter-spacing:.16em}
+.brandedCatalog .storeCard:hover{border-color:var(--catalog-primary)}
+.brandedCatalog .productCard .cardContent>b{color:var(--catalog-primary)}
+.brandedCatalog .quickBackFloat{color:var(--catalog-primary);border-color:var(--catalog-primary)}
+.brandedCatalog .guideEntryIcon{color:var(--catalog-primary);background:var(--catalog-soft)}
+.brandedCatalog .guideEntryAction{color:var(--catalog-primary)}
+.brandedCatalog .checkoutSteps .stepActive{color:var(--catalog-primary);background:var(--catalog-soft)}
+.brandedCatalog .total strong{color:var(--catalog-primary)}
+.catalogBannerLogo{width:76px;height:76px;object-fit:contain;background:#ffffffcc;padding:7px;border-radius:15px;flex:none}
+.catalogBannerName{color:var(--catalog-primary);font-size:15px;font-weight:800;margin-bottom:7px}
+.catalogLoadingLogoV331{width:54px;height:54px;object-fit:contain}
+/* Admin: formulir tampilan berdiri sendiri, tidak mengubah katalog produk. */
+.brandingAdminPanel{max-width:780px;margin:0 auto}
+.brandingAdminPanel h2{margin:0 0 10px}
+.brandingModeButtons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 18px}
+.brandingModeButtons button{display:flex;align-items:center;justify-content:center;gap:9px;padding:14px 12px;min-height:50px;border:1px solid #dde3eb;background:#fff;border-radius:12px;font-weight:800}
+.brandingModeButtons button.active{background:#eaf6ef;border-color:#176B47;color:#176B47}
+.brandingForm{display:grid;gap:20px}
+.brandingLogoField{display:grid;gap:10px}
+.brandingLogoLine{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.brandingLogoPreview{width:105px;height:105px;display:grid;place-items:center;flex:none;background:#f1f4f8;border:1px solid #dde3eb;border-radius:17px;color:#6675a0}
+.brandingLogoPreview img,.brandingPreviewLogo img{height:100%;width:100%;object-fit:contain}
+.brandingLogoControls{display:flex;flex:1;min-width:190px;flex-direction:column;align-items:flex-start;gap:9px}
+.brandingLogoControls small,.brandingColors small{font-size:12px;line-height:1.6;color:#66748b}
+.brandingUploadButton{position:relative;display:inline-flex!important;align-items:center;flex-direction:row!important;gap:8px!important;border-radius:10px;background:#f4f0ff;color:#5a39b2;padding:12px 16px;cursor:pointer;font-weight:800!important}
+.brandingUploadButton input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.brandingRemoveLogo,.brandingReset{border:1px solid #dce2ec;background:#fff;padding:11px 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:7px;color:#52627a;font-weight:700}
+.brandingColors{border:1px solid #e0e6ef;border-radius:13px;padding:14px 16px}
+.brandingColors legend{font-size:13px;font-weight:800;padding:0 5px;color:#40506d}
+.brandingSwatches{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.brandingSwatches button{width:38px;height:38px;border-radius:50%;border:2px solid #e7eaf0}
+.brandingSwatches button.chosen{outline:3px solid #5f6e88;outline-offset:2px}
+.brandingColorInput{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:16px;margin-top:8px}
+.brandingColorInput input[type=color]{width:64px;height:43px;padding:4px;cursor:pointer;flex:none}
+.brandingLivePreview{border:1px solid #e0e6ef;border-radius:14px;overflow:hidden}
+.brandingLivePreview>strong{display:block;background:#f9fafc;padding:13px 16px;font-size:13px}
+.brandingPreviewHeader{background:var(--catalog-primary);color:#fff;display:flex;align-items:center;gap:12px;padding:17px;font-weight:800;line-height:1.4;overflow-wrap:anywhere}
+.brandingPreviewLogo{display:grid;place-items:center;width:45px;height:45px;background:#fff;border-radius:9px;color:var(--catalog-primary);overflow:hidden;flex:none}
+.brandingPreviewContent{background:var(--catalog-soft);padding:22px}
+.brandingPreviewContent p{color:#17264b;margin-bottom:16px}
+.brandingPreviewButton{display:inline-block;color:#fff;background:var(--catalog-primary);border-radius:9px;padding:10px 19px;font-size:14px;font-weight:800}
+.brandingSuccess{background:#effaf2;border:1px solid #b8e7c9;border-radius:10px;padding:13px;color:#166840;margin:0}
+.brandingFormActions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:700px){
+ .catalogBrandLogo{width:33px;height:33px}
+ .brandedCatalog .catalogBrandText{font-size:15px}
+ .catalogBannerLogo{width:55px;height:55px}
+ .catalogBannerName{font-size:13px}
+ .brandingFormActions button{flex:1}
+ .brandingModeButtons button{font-size:12px}
+}
+
+.catalogGuideLogoV331{display:block;max-width:64px;max-height:64px;object-fit:contain;margin-bottom:9px}

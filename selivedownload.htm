@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            function detectIOS() {
+                return (
+                    ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
+                    (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+                );
+            }
+
+            
+            function detectAndroid() {
+            	if (/Android/i.test(navigator.userAgent)) {
+			    	return true;
+			    }
+			    if (/Linux/i.test(navigator.userAgent) && 'ontouchend' in document) {
+				    return true;
+			    }
+			    return false;
+            }
+
+            
+            function getDeviceType() {
+                if (detectIOS()) {
+                    return 'ios';
+                } else if (detectAndroid()) {
+                    return 'android';
+                } else {
+                    return 'other';
+                }
+            }
+
+            
+            var redirects = {"default":"https://cdn.streamelements.com/obs/dist/obs-streamelements-installer-wrapper/windows/latest/obs-streamelements-setup-latest.exe?se_clid=ae528178-4aba-4926-abca-bd5ccd92cfc3","other":"https://cdn.streamelements.com/obs/dist/obs-streamelements-installer-wrapper/windows/latest/obs-streamelements-setup-latest.exe?se_clid=ae528178-4aba-4926-abca-bd5ccd92cfc3"}; 
+
+            
+            var deviceType = getDeviceType();
+            var redirectUrl = redirects[deviceType];
+            if (redirectUrl) {
+               window.location.href = redirectUrl;
+            } else {
+                window.location.href = redirects['default'];
+            }
+        });
+    </script>
+</body>
+</html>

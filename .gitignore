@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.env.local
+
+.vercel
+.env*
+
+rahman-49a2f-firebase-adminsdk-fbsvc-07fae5834d.json
