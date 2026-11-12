@@ -1,4 +1,4 @@
-# Katalog Pondok — Patch Edit Pesanan Santri V34
+# Katalog Pondok — Patch Edit + Arsip Pesanan Santri V35
 
 Paket ini berisi salinan proyek Katalog Pondok dengan antarmuka edit pesanan santri dan migrasi SQL yang menyertainya.
 
@@ -16,11 +16,12 @@ Paket dibuat dari arsip proyek yang diberikan. Berkas `.env`, `.env.local`, kunc
 2. Buka folder `katalog-pondok` di VS Code.
 3. Jalankan `npm install`.
 4. Buka Supabase SQL Editor dan jalankan `supabase-v34-edit-student-orders.sql` satu kali setelah backup.
-5. Siapkan `.env` dengan URL Supabase dan anon key proyek Anda.
-6. Jalankan `npm run build`.
-7. Jika build sukses, jalankan `npm run dev` untuk uji lokal.
-8. Uji edit satu pesanan percobaan: data santri, tanggal, tambah/hapus produk, jumlah, total, dan stok. Periksa juga riwayat edit dan riwayat status.
-9. Deploy ke Vercel setelah seluruh pengujian staging lulus.
+5. Setelah V34 berhasil, jalankan `supabase-v35-archive-student-orders.sql` satu kali. V35 mengaktifkan arsip/hapus dari daftar untuk semua status pesanan Santri, termasuk selesai.
+6. Siapkan `.env` dengan URL Supabase dan anon key proyek Anda.
+7. Jalankan `npm run build`.
+8. Jika build sukses, jalankan `npm run dev` untuk uji lokal.
+9. Uji edit dan arsip satu pesanan percobaan. Pastikan data tetap di database, hilang dari daftar aktif, dan laporan keuangan tetap utuh.
+10. Deploy ke Vercel setelah seluruh pengujian staging lulus.
 
 ## Batasan dan catatan verifikasi
 - Paket ini adalah patch berbasis source ZIP yang diberikan, bukan hasil uji transaksi terhadap database Supabase Anda.
@@ -34,3 +35,10 @@ Paket dibuat dari arsip proyek yang diberikan. Berkas `.env`, `.env.local`, kunc
 - `src/OrderEditStudent.jsx`: form edit pesanan santri.
 - `supabase-v34-edit-student-orders.sql`: migrasi RPC dan audit riwayat edit.
 - `tests/order-edit-student-v1.test.mjs`: pemeriksaan statis tambahan.
+
+## Fitur arsip V35
+- Semua status Kiriman Santri boleh diarsipkan, termasuk selesai dan sudah diserahterimakan.
+- Ini adalah soft delete: data pesanan, riwayat status, dan bukti serah-terima tidak dihapus permanen.
+- Pesanan yang belum selesai dan masih memegang reservasi mengembalikan stok. Pesanan selesai/serah-terima tidak mengembalikan stok.
+- Arsip disembunyikan dari daftar admin dan laporan operasional santri; baris transaksi tetap ada untuk audit/laporan keuangan.
+- Tombol berlabel `Arsipkan / Hapus dari daftar` agar jelas bahwa data tetap tersimpan.

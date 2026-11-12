@@ -362,3 +362,8 @@
 .orderEditActions{display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;padding:12px 0;background:var(--panel,#fff)}
 .orderEditForm input,.orderEditForm select,.orderEditForm textarea{width:100%;min-height:44px}
 @media(max-width:560px){.orderEditOverlay{padding:0;align-items:flex-end}.orderEditModal{max-height:94dvh;border-radius:18px 18px 0 0}.orderEditItem{grid-template-columns:1fr}.orderEditItemFoot{grid-column:1}}
+
+
+/* Arsip pesanan santri */
+.orderArchiveButton{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:8px 8px 8px 0;padding:9px 13px;border:1px solid #b45309;border-radius:10px;background:#fff7ed;color:#9a3412;font-weight:700;cursor:pointer}
+.orderArchiveButton:hover{background:#ffedd5}
