@@ -349,3 +349,16 @@
 }
 
 .catalogGuideLogoV331{display:block;max-width:64px;max-height:64px;object-fit:contain;margin-bottom:9px}
+
+
+/* Editor pesanan santri */
+.orderEditButton{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin:12px 0;padding:9px 14px;border:1px solid #176b47;border-radius:10px;background:#eef7f1;color:#145b3c;font-weight:700;cursor:pointer}
+.orderEditOverlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,23,42,.58);overflow:auto}
+.orderEditModal{width:min(760px,100%);max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 18px 60px rgba(0,0,0,.25)}
+.orderEditForm{display:grid;gap:14px}
+.orderEditForm h3{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)}
+.orderEditItem{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;padding:12px;border:1px solid var(--border,#e5e7eb);border-radius:12px}
+.orderEditItemFoot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted,#64748b);font-size:.9rem}
+.orderEditActions{display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;padding:12px 0;background:var(--panel,#fff)}
+.orderEditForm input,.orderEditForm select,.orderEditForm textarea{width:100%;min-height:44px}
+@media(max-width:560px){.orderEditOverlay{padding:0;align-items:flex-end}.orderEditModal{max-height:94dvh;border-radius:18px 18px 0 0}.orderEditItem{grid-template-columns:1fr}.orderEditItemFoot{grid-column:1}}
