@@ -1,4 +1,4 @@
-# Katalog Pondok — Patch V38: tautan langsung produk + halaman toko terpisah + edit & arsip pesanan santri
+# Katalog Pondok — Patch V39: tautan langsung produk + halaman toko terpisah + edit & arsip pesanan santri
 
 Paket ini berisi salinan proyek Katalog Pondok dengan antarmuka edit pesanan santri dan migrasi SQL yang menyertainya.
 
@@ -72,3 +72,11 @@ Tidak ada migrasi SQL baru untuk V37. Tetap gunakan migrasi V34, V35, dan V36 se
 - Tombol `Beranda` di header pelanggan dihilangkan agar tampilan lebih ringkas.
 - Logo/nama Katalog di header tetap menjadi jalur kembali ke halaman awal.
 - Tombol keranjang tetap tersedia ketika pelanggan sedang berada dalam mode belanja.
+
+
+## Perbaikan halaman awal kosong V39
+- Pada URL root `/`, mode pelanggan tidak lagi otomatis dipilih sebagai `student`.
+- Halaman awal kembali tampil sehingga pengunjung dapat memilih Kiriman Santri atau Belanja Umum.
+- Deep link produk tetap menentukan mode dari query `mode`; jika tidak ada, fallback tetap ke `student`.
+- Navigasi browser ke root juga mengosongkan mode pelanggan, mencegah halaman kosong setelah tombol Back.
+- Tidak ada perubahan database atau migrasi SQL.

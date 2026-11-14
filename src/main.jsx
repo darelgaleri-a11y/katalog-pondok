@@ -57,7 +57,7 @@ function App(){
  const [handoverRecords,setHandoverRecords]=useState({}),[handoverBusy,setHandoverBusy]=useState(null);
  const [allStudentOrders,setAllStudentOrders]=useState([]),[opsLoading,setOpsLoading]=useState(false),[opsError,setOpsError]=useState(''),[opsLoaded,setOpsLoaded]=useState(false);
  const [carts,setCarts]=useState(()=>read('multi-carts-v3',{general:{},student:{}}));
- const [mode,setMode]=useState(routeMode()||routeProductMode()||'student'),[page,setPage]=useState(()=>routeProductId()?'product':routeStoreSlug()?'store':routeMode()?'stores':'home'),[storeId,setStoreId]=useState(null),[search,setSearch]=useState(''),[storeSearch,setStoreSearch]=useState('');
+ const [mode,setMode]=useState(()=>routeMode()||(routeProductId()?routeProductMode()||'student':null)),[page,setPage]=useState(()=>routeProductId()?'product':routeStoreSlug()?'store':routeMode()?'stores':'home'),[storeId,setStoreId]=useState(null),[search,setSearch]=useState(''),[storeSearch,setStoreSearch]=useState('');
  const [showQuickBack,setShowQuickBack]=useState(false);
  const [showGuide,setShowGuide]=useState(false);
  const [guideStep,setGuideStep]=useState(0);
@@ -226,7 +226,7 @@ function App(){
   return()=>window.removeEventListener('scroll',onScroll);
  },[]);
  useEffect(()=>{localStorage.setItem('multi-carts-v3',JSON.stringify(carts))},[carts]);
- useEffect(()=>{const cb=()=>{const nextMode=routeMode();const slug=routeStoreSlug();const productId=routeProductId();setAdmin(activeRoute()==='/admin');setMode(nextMode||routeProductMode()||'student');setStoreId(null);setPage(productId?'product':slug?'store':nextMode?'stores':'home');setSearch('');setStoreSearch('');checkoutTokenRef.current=null;setEditing(null);window.scrollTo(0,0)};window.addEventListener('popstate',cb);return()=>window.removeEventListener('popstate',cb)},[]);
+ useEffect(()=>{const cb=()=>{const nextMode=routeMode();const slug=routeStoreSlug();const productId=routeProductId();setAdmin(activeRoute()==='/admin');setMode(nextMode||(productId?routeProductMode()||'student':null));setStoreId(null);setPage(productId?'product':slug?'store':nextMode?'stores':'home');setSearch('');setStoreSearch('');checkoutTokenRef.current=null;setEditing(null);window.scrollTo(0,0)};window.addEventListener('popstate',cb);return()=>window.removeEventListener('popstate',cb)},[]);
  const ORDERS_PAGE_SIZE=50;
  async function loadOrders(){
   const requestId=++orderRequestSeqRef.current;
