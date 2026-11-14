@@ -1,46 +1,79 @@
 import fs from 'node:fs';
 
-const file = 'src/main.jsx';
-if (!fs.existsSync(file)) {
-  console.error('src/main.jsx tidak ditemukan. Jalankan script dari folder utama proyek.');
-  process.exit(1);
-}
+const mainPath = 'src/main.jsx';
+let main = fs.readFileSync(mainPath, 'utf8');
 
-let source = fs.readFileSync(file, 'utf8');
-const fieldPattern = /<label\b[^>]*>[\s\S]*?Nama pemesan[\s\S]*?<input\b(?=[^>]*\bname=["']name["'])[^>]*\/?>[\s\S]*?<\/label>/g;
-const matches = [...source.matchAll(fieldPattern)];
-
-if (matches.length > 1) {
-  console.error('Ditemukan lebih dari satu field Nama pemesan. Tidak ada file yang diubah.');
-  process.exit(1);
-}
-
-if (matches.length === 1) {
-  const match = matches[0];
-  const before = source.slice(Math.max(0, match.index - 220), match.index);
-  const isAlreadyGeneralOnly = /mode\s*===\s*['"]general['"]\s*&&\s*\{?\s*$/.test(before);
-  if (!isAlreadyGeneralOnly) {
-    const original = match[0];
-    source = source.slice(0, match.index) +
-      `{mode==='general'&&${original}}` +
-      source.slice(match.index + original.length);
-    console.log('Field Nama pemesan dibatasi hanya untuk Belanja Umum.');
-  } else {
-    console.log('Field Nama pemesan sudah dibatasi hanya untuk Belanja Umum.');
+function replaceOnce(source, before, after, description) {
+  const first = source.indexOf(before);
+  if (first < 0) throw new Error(`Bagian tidak ditemukan: ${description}. Tidak ada file yang diubah.`);
+  if (source.indexOf(before, first + before.length) >= 0) {
+    throw new Error(`Bagian muncul lebih dari sekali: ${description}. Tidak ada file yang diubah.`);
   }
-} else {
-  console.log('Field Nama pemesan tidak ditemukan; tidak ada field baru yang ditambahkan.');
+  return source.slice(0, first) + after + source.slice(first + before.length);
 }
 
-const oldPrivacy = '<p>Nama pemesan dipakai untuk mencatat serta menindaklanjuti pesanan. Nomor WhatsApp pemesan tidak diminta oleh katalog; kasir dapat melihat nomor pengirim setelah pesan dikirim lewat WhatsApp. Pada Belanja Umum, alamat dan nama penerima dipakai untuk pengiriman dan diberikan kepada kasir toko terkait. Untuk kiriman santri, nama santri, kamar/kelas, tujuan putra/putri, dan tanggal penyerahan juga dipakai agar kiriman sampai kepada penerima yang tepat.</p>';
-const newPrivacy = `<p>{mode==='general'?'Nama pemesan dipakai untuk mencatat serta menindaklanjuti pesanan. Nomor WhatsApp pemesan tidak diminta oleh katalog; kasir dapat melihat nomor pengirim setelah pesan dikirim lewat WhatsApp. Alamat dan nama penerima dipakai untuk pengiriman dan diberikan kepada kasir toko terkait.':'Untuk kiriman santri, nama pemesan tidak diperlukan. Nama santri, kamar/kelas, tujuan putra/putri, dan tanggal penyerahan dipakai agar kiriman sampai kepada penerima yang tepat.'}</p>`;
+main = replaceOnce(
+  main,
+  "const f=new FormData(e.currentTarget),name=String(f.get('name')||'').trim(),pay='Transfer bank';\n if(!name)return alert('Nama pemesan wajib diisi.');",
+  "const f=new FormData(e.currentTarget),name=String((mode==='student'?f.get('student'):f.get('name'))||'').trim(),pay='Transfer bank';\n if(!name)return alert(mode==='student'?'Nama santri wajib diisi.':'Nama pemesan wajib diisi.');",
+  'validasi nama pada checkout'
+);
 
-if (source.includes(oldPrivacy)) {
-  source = source.replace(oldPrivacy, newPrivacy);
-  console.log('Keterangan privasi diperbarui sesuai jenis pesanan.');
-} else if (!source.includes('Untuk kiriman santri, nama pemesan tidak diperlukan.')) {
-  console.warn('Teks privasi berbeda dari versi yang diaudit; bagian privasi tidak diubah.');
-}
+main = replaceOnce(
+  main,
+  "<label>Nama pemesan<input name=\"name\" required placeholder=\"Nama orang tua / pembeli\"/></label>{mode==='student'&&<>",
+  "{mode==='general'&&<label>Nama pemesan<input name=\"name\" required placeholder=\"Nama orang tua / pembeli\"/></label>}{mode==='student'&&<>",
+  'field nama pemesan pada formulir'
+);
 
-fs.writeFileSync(file, source, 'utf8');
-console.log('Selesai. File yang diubah: src/main.jsx');
+main = replaceOnce(
+  main,
+  "\\nNama pemesan: ${name}\\nMetode bayar: Transfer bank",
+  "${mode==='general'?`\\nNama pemesan: ${name}`:''}\\nMetode bayar: Transfer bank",
+  'baris nama pada pesan WhatsApp'
+);
+
+main = replaceOnce(
+  main,
+  "Nama pemesan dipakai untuk mencatat serta menindaklanjuti pesanan.",
+  "Untuk Belanja Umum, nama pemesan dipakai untuk mencatat serta menindaklanjuti pesanan. Untuk Kiriman Santri, nama santri menjadi identitas penerima pesanan.",
+  'keterangan privasi'
+);
+
+fs.writeFileSync(mainPath, main, 'utf8');
+
+const testPath = 'tests/student-checkout-no-customer-name.test.mjs';
+const test = `import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const main = fs.readFileSync(new URL('../src/main.jsx', import.meta.url), 'utf8');
+
+test('field nama pemesan hanya muncul pada Belanja Umum', () => {
+  assert.match(main, /\\{mode==='general'&&<label>Nama pemesan/);
+  assert.match(main, /\\{mode==='student'&&/);
+});
+
+test('checkout Kiriman Santri memakai nama santri tanpa meminta nama pemesan', () => {
+  assert.match(main, /mode==='student'\\?f\\.get\\('student'\\):f\\.get\\('name'/);
+  assert.match(main, /mode==='student'\\?'Nama santri wajib diisi\\.'/);
+});
+
+test('Belanja Umum tetap mewajibkan nama pemesan', () => {
+  assert.match(main, /mode==='student'\\?'Nama santri wajib diisi\\.':'Nama pemesan wajib diisi\\.'/);
+});
+
+test('pesan WhatsApp hanya menampilkan nama pemesan untuk Belanja Umum', () => {
+  assert.match(main, /mode==='general'\\?`\\\\nNama pemesan: \\$\\{name\\}`:''/);
+});
+
+test('RPC tetap menerima identitas nama untuk menjaga kompatibilitas database', () => {
+  assert.match(main, /customer_name:name/);
+  assert.match(main, /student_name:mode==='student'\\?/);
+});
+`;
+fs.writeFileSync(testPath, test, 'utf8');
+
+console.log('Perbaikan Kiriman Santri selesai diterapkan.');
+console.log('File diubah: src/main.jsx');
+console.log('Tes baru: tests/student-checkout-no-customer-name.test.mjs');
