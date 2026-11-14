@@ -14,8 +14,14 @@ test('ketika halaman toko dibuka, produk difilter hanya dari toko tersebut', () 
   assert.match(main, /visibleProducts\.filter\(p=>p\.storeId===storeId/);
 });
 
-test('keranjang pelanggan dibatasi ke toko aktif dan checkout menolak campuran toko', () => {
-  assert.match(main, /current=Object\.fromEntries\(Object\.entries\(current\)\.filter\(\(\[id\]\)=>db\.products\.find\(x=>x\.id===id\)\?\.storeId===p\.storeId\)\)/);
+test('keranjang tidak menghapus barang toko lain tanpa konfirmasi', () => {
+  assert.match(main, /const hasOtherStore/);
+  assert.match(main, /window\.confirm\('Keranjang berisi barang dari toko lain/);
+  assert.match(main, /if\(hasOtherStore\)current=\{\}/);
+  assert.match(main, /return false;/);
+});
+
+test('checkout tetap menolak campuran toko', () => {
   assert.match(main, /Satu pesanan hanya boleh berasal dari satu toko/);
   assert.match(main, /supabase\.rpc\('create_checkout_v36'/);
 });
