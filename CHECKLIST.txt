@@ -1,0 +1,18 @@
+SEBELUM PATCH
+[ ] Backup folder data/ dan file SQLite -wal/-shm
+[ ] Buka terminal pada root proyek Kataloh-darul-ilmi
+
+PASANG
+[ ] Ekstrak ZIP ke root proyek
+[ ] Jalankan: node security-stage1/apply.mjs
+[ ] Atur ADMIN_USERNAME / ADMIN_PASSWORD / ADMIN_NAME di environment
+[ ] Jalankan: npm install
+[ ] Jalankan: npm run lint
+[ ] Jalankan: npm run build
+[ ] Jalankan: npm start
+
+SESUDAH PATCH
+[ ] Login kembali (sesi lama memang dicabut)
+[ ] Jika masih memakai password default lama, segera ubah menjadi minimal 12 karakter
+[ ] Pastikan HTTPS aktif untuk production
+[ ] Pastikan database dan uploads tidak lagi di-commit ke Git
