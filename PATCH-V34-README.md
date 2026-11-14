@@ -1,4 +1,4 @@
-# Katalog Pondok — Patch Edit + Arsip Pesanan Santri V35
+# Katalog Pondok — Patch V36: halaman toko terpisah + edit & arsip pesanan santri
 
 Paket ini berisi salinan proyek Katalog Pondok dengan antarmuka edit pesanan santri dan migrasi SQL yang menyertainya.
 
@@ -42,3 +42,17 @@ Paket dibuat dari arsip proyek yang diberikan. Berkas `.env`, `.env.local`, kunc
 - Pesanan yang belum selesai dan masih memegang reservasi mengembalikan stok. Pesanan selesai/serah-terima tidak mengembalikan stok.
 - Arsip disembunyikan dari daftar admin dan laporan operasional santri; baris transaksi tetap ada untuk audit/laporan keuangan.
 - Tombol berlabel `Arsipkan / Hapus dari daftar` agar jelas bahwa data tetap tersimpan.
+
+
+## Fitur pelanggan per toko V36
+- Setiap toko memiliki URL halaman sendiri: `/toko/<slug-nama-toko>`.
+- Membuka URL toko langsung hanya memuat produk milik toko tersebut; jika slug tidak valid/toko tidak aktif, tampil pesan toko tidak ditemukan.
+- Keranjang dibatasi pada satu toko. Ketika pelanggan mulai menambah barang dari toko berbeda, keranjang sebelumnya diganti agar tidak tercampur.
+- Checkout mempunyai validasi tambahan agar satu transaksi tidak pernah berisi produk lintas toko.
+- Tautan toko tersimpan di riwayat browser dan dapat dibagikan. Nama toko sebaiknya unik karena slug berasal dari nama toko.
+
+Catatan implementasi: frontend memfilter dan membatasi navigasi/keranjang berdasarkan toko. RPC checkout Supabase yang ada tetap menjadi validasi harga, stok, dan aturan audience di sisi server; untuk pembatasan keamanan yang mutlak dari sisi server, migrasi backend lanjutan perlu menambahkan parameter store_id dan validasi store tunggal dalam RPC checkout yang digunakan.
+
+
+## SQL checkout satu toko di sisi server V36
+Jalankan `supabase-v36-single-store-checkout.sql` setelah V33 (dan setelah migrasi edit/arsip V34/V35), sebelum frontend V36 digunakan. Fungsi `create_checkout_v36` menolak item dari lebih dari satu toko di server, lalu meneruskan checkout ke `create_checkout_v33` yang tetap bertanggung jawab memvalidasi harga, stok, audience, alamat, token deduplikasi, dan aturan lain.

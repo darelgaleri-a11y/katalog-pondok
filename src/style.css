@@ -367,3 +367,9 @@
 /* Arsip pesanan santri */
 .orderArchiveButton{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:8px 8px 8px 0;padding:9px 13px;border:1px solid #b45309;border-radius:10px;background:#fff7ed;color:#9a3412;font-weight:700;cursor:pointer}
 .orderArchiveButton:hover{background:#ffedd5}
+
+
+/* Halaman katalog per toko */
+.storePageNotice{margin:10px 0;padding:10px 14px;border:1px solid var(--border,#e5e7eb);border-radius:12px;background:var(--panel,#fff)}
+.storePageBack{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:10px 14px;min-height:44px;border:1px solid var(--border,#d1d5db);border-radius:10px;background:var(--panel,#fff);font-weight:700}
+.storeOnlyCheckoutNote{padding:12px;border-radius:10px;background:#f2f7f3;color:#24543b}
