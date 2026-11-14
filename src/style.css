@@ -351,37 +351,40 @@
 .catalogGuideLogoV331{display:block;max-width:64px;max-height:64px;object-fit:contain;margin-bottom:9px}
 
 
-/* Editor pesanan santri */
-.orderEditButton{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin:12px 0;padding:9px 14px;border:1px solid #176b47;border-radius:10px;background:#eef7f1;color:#145b3c;font-weight:700;cursor:pointer}
-.orderEditOverlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,23,42,.58);overflow:auto}
-.orderEditModal{width:min(760px,100%);max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 18px 60px rgba(0,0,0,.25)}
-.orderEditForm{display:grid;gap:14px}
-.orderEditForm h3{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)}
-.orderEditItem{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;padding:12px;border:1px solid var(--border,#e5e7eb);border-radius:12px}
-.orderEditItemFoot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted,#64748b);font-size:.9rem}
-.orderEditActions{display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;padding:12px 0;background:var(--panel,#fff)}
-.orderEditForm input,.orderEditForm select,.orderEditForm textarea{width:100%;min-height:44px}
-@media(max-width:560px){.orderEditOverlay{padding:0;align-items:flex-end}.orderEditModal{max-height:94dvh;border-radius:18px 18px 0 0}.orderEditItem{grid-template-columns:1fr}.orderEditItemFoot{grid-column:1}}
-
-
-/* Arsip pesanan santri */
-.orderArchiveButton{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:8px 8px 8px 0;padding:9px 13px;border:1px solid #b45309;border-radius:10px;background:#fff7ed;color:#9a3412;font-weight:700;cursor:pointer}
-.orderArchiveButton:hover{background:#ffedd5}
-
-
-/* Halaman katalog per toko */
-.storePageNotice{margin:10px 0;padding:10px 14px;border:1px solid var(--border,#e5e7eb);border-radius:12px;background:var(--panel,#fff)}
-.storePageBack{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:10px 14px;min-height:44px;border:1px solid var(--border,#d1d5db);border-radius:10px;background:var(--panel,#fff);font-weight:700}
-.storeOnlyCheckoutNote{padding:12px;border-radius:10px;background:#f2f7f3;color:#24543b}
-
-
-/* Halaman detail dan tautan langsung produk */
-.productLinkButton{display:inline-flex;align-items:center;justify-content:center;min-height:38px;margin:7px 8px 7px 0;padding:8px 12px;border:1px solid var(--primary,#6950d8);border-radius:9px;background:transparent;color:var(--primary,#6950d8);font-weight:700;cursor:pointer}
-.productDetailPage{max-width:1000px;margin:0 auto;padding:8px 0 28px}
-.productDetailStore{margin:0 0 12px;color:var(--muted,#667085);font-size:14px;font-weight:700}
-.productDetailGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
-.productDetailInfo{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:8px}
-.productDetailInfo h1{margin:0;font-size:clamp(24px,4vw,34px)}
-.productDetailInfo strong{font-size:24px}
-.productDetailInfo p{margin:0}
-@media(max-width:700px){.productDetailGrid{grid-template-columns:1fr}.productDetailInfo{padding:4px 0}}
+/* V46 — admin lebih terbaca dan aksi pesanan jelas di desktop maupun ponsel. */
+.simpleAdminHero{padding:30px 32px}
+.simpleAdminHero h1{font-size:clamp(27px,3vw,38px);line-height:1.15}
+.simpleAdminNav button{font-size:14px;min-height:58px}
+.simpleAdminNav button svg{width:18px;height:18px;flex:0 0 auto}
+.orderFilters{gap:12px}
+.orderFilters label{font-size:13px;line-height:1.4}
+.orderFilters input,.orderFilters select{min-height:42px;font-size:14px}
+.orderFilters button{font-size:13px;padding:9px 13px}
+.orderCard{font-size:15px;line-height:1.55;padding:22px 0}
+.orderCard p,.orderCard ul{font-size:14px;line-height:1.65}
+.orderCard .sectionHead{align-items:flex-start;flex-wrap:wrap}
+.orderCard .sectionHead b{font-size:15px}
+.orderCard label{font-size:14px;gap:8px}
+.orderCard label select{min-height:44px;font-size:14px}
+.orderCardActions{display:flex;justify-content:flex-end;margin-top:14px}
+.dangerOrderButton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 14px;border:1px solid #efc3cb;border-radius:10px;background:#fff5f6;color:#b4233d;font-size:14px;font-weight:750}
+.dangerOrderButton:hover{background:#ffe8ec;border-color:#e7a3b0}
+.simpleOrderPagination button{font-size:13px}
+@media(max-width:720px){
+ .simpleAdminHero{padding:22px 18px}
+ .simpleAdminHero h1{font-size:27px}
+ .simpleAdminNav{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .simpleAdminNav button{min-height:54px;font-size:13px;padding:9px 7px}
+ .orderFilters{display:grid;grid-template-columns:1fr 1fr;align-items:end}
+ .orderFilters label{min-width:0;font-size:12px}
+ .orderFilters button{width:100%;white-space:normal}
+ .orderCard{padding:18px 0}
+ .orderCard .sectionHead{gap:6px}
+ .orderCard .sectionHead small{font-size:12px}
+ .orderCardActions{justify-content:stretch}
+ .dangerOrderButton{width:100%;min-height:46px}
+}
+@media(max-width:390px){
+ .orderFilters{grid-template-columns:1fr}
+ .simpleAdminNav button{font-size:12px}
+}

@@ -46,3 +46,20 @@ test('checkout Kiriman Santri menyimpan kamar dan kelas terpisah dalam format ya
   assert.match(main, /Kamar: \$\{room\}\\nKelas: \$\{studentClass\}/);
   assert.match(main, /student_room:mode==='student'\?`Kamar: \$\{String\(f\.get\('room'\)\|\|''\)\.trim\(\)\} \| Kelas: \$\{String\(f\.get\('studentClass'\)\|\|''\)\.trim\(\)\}`:null/);
 });
+
+test('setiap kartu pesanan menyediakan aksi hapus yang memanggil RPC server-side', () => {
+  assert.match(main, /async function deleteOrder\(order\)/);
+  assert.match(main, /supabase\.rpc\('admin_delete_order_v46',\{p_order_id:order\.id\}\)/);
+  assert.match(main, /className="dangerOrderButton" onClick=\{\(\)=>deleteOrder\(o\)\}/);
+  assert.match(main, /Hapus pesanan/);
+});
+
+test('penghapusan memuat ulang daftar pesanan dan rekap santri', () => {
+  assert.match(main, /await loadOrders\(\);[\s\S]*if\(order\.mode==='student'\)await loadAllStudentOrders\(\)/);
+});
+
+test('aksi hapus memiliki konfirmasi permanen dan memberi perlindungan catatan serah-terima/rekonsiliasi', () => {
+  assert.match(main, /Hapus pesanan #\$\{orderCode\} secara permanen/);
+  assert.match(main, /catatan serah-terima/);
+  assert.match(main, /catatan rekonsiliasi pembayaran/);
+});
