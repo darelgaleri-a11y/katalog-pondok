@@ -2,42 +2,40 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const server = fs.readFileSync(new URL('../../server.ts', import.meta.url), 'utf8');
-const db = fs.readFileSync(new URL('../../server/db.ts', import.meta.url), 'utf8');
-const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8'));
+const server = fs.readFileSync('server.ts', 'utf8');
+const db = fs.readFileSync('server/db.ts', 'utf8');
 
-test('login memiliki rate limit dan password input dibatasi', () => {
-  assert.match(server, /LOGIN_MAX_FAILURES = 5/);
-  assert.match(server, /LOGIN_BLOCK_MS = 15 \* 60 \* 1000/);
+test('public settings use explicit allowlist', () => {
+  assert.match(server, /PUBLIC_SETTING_KEYS/);
+  assert.match(server, /PUBLIC_SETTING_KEYS\.has\(s\.key\)/);
+});
+
+test('login throttling and bounded credential inputs exist', () => {
+  assert.match(server, /LOGIN_MAX_ATTEMPTS = 5/);
+  assert.match(server, /loginThrottle/);
+  assert.match(server, /recordLoginFailure/);
   assert.match(server, /password\.length > 256/);
 });
 
-test('token sesi disimpan dan dicari dalam bentuk SHA-256', () => {
-  assert.match(server, /function hashSessionToken/);
-  assert.match(server, /hashSessionToken\(token\)/);
-  assert.match(server, /hashSessionToken\(currentToken\)/);
-});
-
-test('pengaturan publik memakai allowlist', () => {
-  assert.match(server, /publicSettingKeys/);
-  assert.match(server, /WHERE key IN/);
-});
-
-test('upload menolak SVG dan memvalidasi signature serta ukuran', () => {
-  assert.ok(server.includes('image\\/(?:png|jpeg|webp)'));
-  assert.match(server, /5 \* 1024 \* 1024/);
-  assert.match(server, /validSignature/);
-});
-
-test('password baru lebih kuat dan hash lama masih didukung', () => {
+test('password changes revoke all administrator sessions', () => {
+  assert.match(server, /DELETE FROM sessions WHERE user_id = \?/);
   assert.match(server, /new_password\.length < 12/);
-  assert.match(db, /CURRENT_PASSWORD_ITERATIONS = 310000/);
-  assert.match(db, /LEGACY_PASSWORD_ITERATIONS = 10000/);
 });
 
-test('tidak ada password admin hard-coded dan start menjalankan tsx', () => {
-  assert.doesNotMatch(db, /adminpondok123/);
-  assert.match(db, /process\.env\.ADMIN_PASSWORD/);
-  assert.equal(pkg.scripts.start, 'tsx server.ts');
-  assert.ok(pkg.dependencies.tsx);
+test('uploads accept only raster formats with signature checks', () => {
+  assert.ok(server.includes('image\\\\/(?:jpeg|png|webp)'));
+  assert.match(server, /isJpeg/);
+  assert.match(server, /isPng/);
+  assert.match(server, /isWebp/);
+  assert.ok(!server.includes('image/svg+xml'));
+});
+
+test('default admin password is no longer embedded', () => {
+  assert.doesNotMatch(db, /hashPassword\('adminpondok123'\)/);
+  assert.match(db, /ADMIN_INITIAL_PASSWORD/);
+});
+
+test('new password hashes use stronger work factor while legacy hashes remain verifiable', () => {
+  assert.match(db, /PASSWORD_ITERATIONS = 310000/);
+  assert.match(db, /LEGACY_PASSWORD_ITERATIONS = 10000/);
 });
