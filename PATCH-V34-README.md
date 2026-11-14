@@ -1,4 +1,4 @@
-# Katalog Pondok — Patch V36: halaman toko terpisah + edit & arsip pesanan santri
+# Katalog Pondok — Patch V38: tautan langsung produk + halaman toko terpisah + edit & arsip pesanan santri
 
 Paket ini berisi salinan proyek Katalog Pondok dengan antarmuka edit pesanan santri dan migrasi SQL yang menyertainya.
 
@@ -56,3 +56,19 @@ Catatan implementasi: frontend memfilter dan membatasi navigasi/keranjang berdas
 
 ## SQL checkout satu toko di sisi server V36
 Jalankan `supabase-v36-single-store-checkout.sql` setelah V33 (dan setelah migrasi edit/arsip V34/V35), sebelum frontend V36 digunakan. Fungsi `create_checkout_v36` menolak item dari lebih dari satu toko di server, lalu meneruskan checkout ke `create_checkout_v33` yang tetap bertanggung jawab memvalidasi harga, stok, audience, alamat, token deduplikasi, dan aturan lain.
+
+
+## Tautan langsung produk V37
+- Setiap kartu produk memiliki tombol `Lihat produk` untuk membuka halaman detail khusus.
+- Tombol `Salin link` menyalin URL unik `/produk/<id>?mode=<student|general>` agar bisa dibagikan melalui WhatsApp atau media lain.
+- Saat pelanggan membuka URL tersebut, aplikasi langsung membuka detail produk terkait, bukan daftar toko.
+- Tombol mengambang `Kembali ke toko` yang terlihat pada halaman pelanggan dihapus.
+- Halaman detail menampilkan foto, nama, kategori, harga, stok, dan tombol beli. Tautan produk tidak valid atau produk/toko nonaktif akan menampilkan pesan produk tidak tersedia.
+
+Tidak ada migrasi SQL baru untuk V37. Tetap gunakan migrasi V34, V35, dan V36 sesuai panduan paket.
+
+
+## Navigasi pelanggan V38
+- Tombol `Beranda` di header pelanggan dihilangkan agar tampilan lebih ringkas.
+- Logo/nama Katalog di header tetap menjadi jalur kembali ke halaman awal.
+- Tombol keranjang tetap tersedia ketika pelanggan sedang berada dalam mode belanja.

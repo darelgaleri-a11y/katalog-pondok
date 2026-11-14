@@ -373,3 +373,15 @@
 .storePageNotice{margin:10px 0;padding:10px 14px;border:1px solid var(--border,#e5e7eb);border-radius:12px;background:var(--panel,#fff)}
 .storePageBack{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:10px 14px;min-height:44px;border:1px solid var(--border,#d1d5db);border-radius:10px;background:var(--panel,#fff);font-weight:700}
 .storeOnlyCheckoutNote{padding:12px;border-radius:10px;background:#f2f7f3;color:#24543b}
+
+
+/* Halaman detail dan tautan langsung produk */
+.productLinkButton{display:inline-flex;align-items:center;justify-content:center;min-height:38px;margin:7px 8px 7px 0;padding:8px 12px;border:1px solid var(--primary,#6950d8);border-radius:9px;background:transparent;color:var(--primary,#6950d8);font-weight:700;cursor:pointer}
+.productDetailPage{max-width:1000px;margin:0 auto;padding:8px 0 28px}
+.productDetailStore{margin:0 0 12px;color:var(--muted,#667085);font-size:14px;font-weight:700}
+.productDetailGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.productDetailInfo{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:8px}
+.productDetailInfo h1{margin:0;font-size:clamp(24px,4vw,34px)}
+.productDetailInfo strong{font-size:24px}
+.productDetailInfo p{margin:0}
+@media(max-width:700px){.productDetailGrid{grid-template-columns:1fr}.productDetailInfo{padding:4px 0}}

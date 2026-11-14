@@ -4,7 +4,7 @@ import {normalizeVariantText} from './productVariants.js';
 import {photoForProduct} from './catalogPhotos.js';
 import PhotoGallery from './PhotoGallery.jsx';
 
-export default function VariantProductCard({group, money, onAdd}) {
+export default function VariantProductCard({group, money, onAdd, onOpen, onShare}) {
   const [selectedId, setSelectedId] = useState('');
   const variants = group.variants;
   const product = group.representative;
@@ -19,6 +19,7 @@ export default function VariantProductCard({group, money, onAdd}) {
     <div className="cardContent">
       <small>{product.category}</small>
       <h3>{baseName}</h3>
+      {onOpen&&<button type="button" className="productLinkButton" onClick={()=>onOpen(product)}>Lihat produk</button>}{onShare&&<button type="button" className="productLinkButton" onClick={()=>onShare(product)}>Salin link</button>}
       <b>{selected ? money(selected.price) : minPrice===maxPrice ? money(minPrice) : `Mulai ${money(minPrice)}`}</b>
       <label className="variantSelectLabel">Ukuran / warna
         <select value={selectedId} onChange={e=>setSelectedId(e.target.value)} aria-label={`Pilih ukuran dan warna untuk ${baseName}`}>
