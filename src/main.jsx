@@ -377,8 +377,14 @@ function App(){
  }
  function changeQty(p,qty){updateCart(prev=>{const next={...prev};if(qty<=0)delete next[p.id];else next[p.id]=Math.min(p.stock,qty);return next})}
  async function checkout(e){e.preventDefault();if(checkoutBusy)return;setOrderError('');setCheckoutLink('');if(!rows.length)return alert('Keranjang kosong.');
-  if(new Set(rows.map(row=>row.p.storeId)).size!==1)return alert('Satu pesanan hanya boleh berasal dari satu toko. Selesaikan pesanan toko lain secara terpisah.');if(rows.some(({p,qty})=>qty>p.stock))return alert('Ada jumlah pesanan yang melebihi stok.');const f=new FormData(e.currentTarget),name=String(f.get('name')||'').trim(),pay='Transfer bank';
- if(!name)return alert('Nama pemesan wajib diisi.');let target='',extra='',bankInfo='';
+  if(new Set(rows.map(row=>row.p.storeId)).size!==1)return alert('Satu pesanan hanya boleh berasal dari satu toko. Selesaikan pesanan toko lain secara terpisah.');if(rows.some(({p,qty})=>qty>p.stock))return alert('Ada jumlah pesanan yang melebihi stok.');const f=new FormData(e.currentTarget),
+  name=mode==='student'
+    ?'Tidak dicantumkan'
+    :String(f.get('name')||'').trim(),
+  pay='Transfer bank';
+
+if(mode==='general'&&!name)
+  return alert('Nama pemesan wajib diisi.');let target='',extra='',bankInfo='';
  let shipping={};
  if(mode==='general'){try{shipping=readGeneralShipping(f)}catch(shippingError){setOrderError(shippingError.message);return}}
  if(mode==='student'){
